@@ -4,7 +4,7 @@ import { LogInIcon } from "lucide-react"
 import Link from "next/link"
 
 
-export default async function LogButtons() {
+export default async function RegisterOrLoginButton() {
   const supabase = createServerClient()
   const { data } = await supabase.auth.getUser()
   if (data.user) {

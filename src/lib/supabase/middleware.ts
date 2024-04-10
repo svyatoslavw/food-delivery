@@ -1,3 +1,4 @@
+import { logout } from "@/app/auth/actions"
 import { type CookieOptions, createServerClient } from "@supabase/ssr"
 import { type NextRequest, NextResponse } from "next/server"
 
@@ -54,10 +55,16 @@ export async function updateSession(request: NextRequest) {
   })
 
   const {
-    data: { user }
+    data: { user },
+    error
   } = await supabase.auth.getUser()
 
+  if (error?.code === "UND_ERR_CONNECT_TIMEOUT") {
+    logout()
+  }
+
   const url = new URL(request.url)
+
   if (user) {
     if (url.pathname === "/auth") {
       return NextResponse.redirect(new URL("/", request.url))

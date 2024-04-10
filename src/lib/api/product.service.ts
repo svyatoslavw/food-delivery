@@ -1,7 +1,20 @@
 import { createServerClient } from "@/lib/supabase/server"
+import { IProduct } from "@/types"
+
 
 export const ProductService = {
-  async getAll() {
+  async getPopular() {
+    const supabase = createServerClient()
+
+    const { data: products, error } = await supabase.from("product").select("*").order("created_at", { ascending: false }).range(0, 3)
+
+    if (error) {
+      console.log(error.message)
+    }
+
+    return (products as IProduct[]) || []
+  },
+  async getDiscounted() {
     const supabase = createServerClient()
 
     const { data: products, error } = await supabase
@@ -15,6 +28,6 @@ export const ProductService = {
       console.log(error.message)
     }
 
-    return (products as Product[]) || []
+    return (products as IProduct[]) || []
   }
 }

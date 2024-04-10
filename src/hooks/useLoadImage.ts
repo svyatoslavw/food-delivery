@@ -1,7 +1,9 @@
-import { createServerClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client"
+import type { IProduct } from "@/types"
 
-const useLoadImage = (product: Product) => {
-  const supabase = createServerClient()
+
+const useLoadImage = (product: IProduct) => {
+  const supabase = createClient()
 
   if (!product) {
     return null

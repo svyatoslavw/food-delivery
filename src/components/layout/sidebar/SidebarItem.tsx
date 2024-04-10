@@ -11,7 +11,7 @@ const SidebarItem = ({ isActive, Icon, href, label }: ISideLink) => {
         ["bg-gradient-custom font-medium text-white"]: isActive
       })}
     >
-      <Icon size={16} />
+      <Icon size={18} />
       <div>{label}</div>
     </Link>
   )

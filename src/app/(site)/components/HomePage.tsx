@@ -1,10 +1,17 @@
 import { CategoryList } from "./category/CategoryList"
-import { PopularList } from "./popular/PopularList"
+import { DiscountedList } from "@/app/(site)/components/discounted/DiscountedList"
+import { PopularList } from "@/app/(site)/components/popular/PopularList"
 import Header from "@/components/layout/header/Header"
-import type { IProduct } from "@/types"
+import type { ICategory, IProduct } from "@/types"
 
 
-const HomePage = ({ products }: { products: IProduct[] }) => {
+interface IHomePage {
+  discountedProducts: IProduct[]
+  popularProducts: IProduct[]
+  categories: ICategory[]
+}
+
+const HomePage = ({ popularProducts, categories, discountedProducts }: IHomePage) => {
   return (
     <div>
       <Header />
@@ -17,8 +24,9 @@ const HomePage = ({ products }: { products: IProduct[] }) => {
       {/*    <Image draggable={false} src={"/banner.png"} className=" object-contain" alt="banner" width={259} height={239} />*/}
       {/*  </div>*/}
       {/*</div>*/}
-      <CategoryList />
-      <PopularList products={products} />
+      <CategoryList categories={categories} />
+      <PopularList products={popularProducts} />
+      <DiscountedList products={discountedProducts} />
     </div>
   )
 }

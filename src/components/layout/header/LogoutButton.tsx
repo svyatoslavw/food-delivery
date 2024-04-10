@@ -15,10 +15,7 @@ const LogoutButton = () => {
   }
 
   return (
-    <button
-      onClick={handler}
-      className="bg-red-600 p-1.5 text-white rounded hover:bg-red-500 transition ease-in-out"
-    >
+    <button onClick={handler} className="bg-red-600 p-1.5 text-white rounded hover:bg-red-500 transition ease-in-out">
       <LogOutIcon />
     </button>
   )

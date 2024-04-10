@@ -1,6 +1,6 @@
 import { SidebarItem } from "@/components/layout/sidebar/SidebarItem"
 import type { ISideLink } from "@/types"
-import { BeefIcon, PackageCheckIcon, SettingsIcon, StarIcon } from "lucide-react"
+import { BeefIcon, PackageCheckIcon, SandwichIcon, SettingsIcon, StarIcon } from "lucide-react"
 import { usePathname } from "next/navigation"
 import { useMemo } from "react"
 
@@ -14,6 +14,12 @@ const Sidebar = () => {
         href: "/",
         Icon: BeefIcon,
         isActive: pathname === "/"
+      },
+      {
+        label: "Menu",
+        href: "/menu",
+        Icon: SandwichIcon,
+        isActive: pathname === "/menu"
       },
       {
         label: "Food order",
@@ -38,7 +44,7 @@ const Sidebar = () => {
   )
 
   return (
-    <div className="flex h-svh w-72 flex-col items-center py-10 ">
+    <div className="flex h-svh w-64 flex-col items-center py-10 ">
       <h1 className="text-shadow mb-10 text-2xl font-bold drop-shadow-lg">
         GoMeal<span className="text-pink-500 drop-shadow-lg">.</span>
       </h1>

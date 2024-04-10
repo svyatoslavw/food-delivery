@@ -1,3 +1,5 @@
+"use client"
+
 import { REGIONS } from "@/components/layout/profile/countries.data"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
@@ -6,9 +8,9 @@ import { Skeleton } from "@/components/ui/skeleton"
 import dynamic from "next/dynamic"
 import React from "react"
 
-const Location = () => {
+const ChangeLocation = () => {
   const LazyMap = dynamic(() => import("@/components/layout/profile/Map"), {
-    ssr: true,
+    ssr: false,
     loading: () => <Skeleton className="h-[50vh] w-full" />
   })
   const [location, setLocation] = React.useState("")
@@ -24,11 +26,11 @@ const Location = () => {
         </DialogHeader>
         <Select required onValueChange={(value) => setLocation(value)}>
           <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select a Country" />
+            <SelectValue placeholder="Select a Region" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Countries</SelectLabel>
+              <SelectLabel>Regions</SelectLabel>
               {REGIONS.map((item) => (
                 <SelectItem key={item.value} value={item.value}>
                   {item.label} / {item.region}
@@ -40,7 +42,7 @@ const Location = () => {
         <LazyMap location={location} />
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
-            <Button type="button" variant="default" className={"bg-red-600 hover:bg-red-700"}>
+            <Button type="button" variant="default">
               Save location
             </Button>
           </DialogClose>
@@ -50,4 +52,4 @@ const Location = () => {
   )
 }
 
-export { Location }
+export { ChangeLocation }

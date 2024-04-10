@@ -1,4 +1,5 @@
 import { HomePage } from "@/app/(site)/components/HomePage"
+import { CategoryService } from "@/lib/api/category.service"
 import { ProductService } from "@/lib/api/product.service"
 import { CREATOR, GITHUB_URL, SITE_KEYWORDS, SITE_NAME, SITE_URL } from "@/lib/config/seo.config"
 import { Metadata } from "next"
@@ -28,6 +29,9 @@ export const metadata: Metadata = {
   keywords: SITE_KEYWORDS
 }
 export default async function Home() {
-  const products = await ProductService.getAll()
-  return <HomePage products={products} />
+  const discountedProducts = await ProductService.getDiscounted()
+  const categories = await CategoryService.getMain()
+  const popularProducts = await ProductService.getPopular()
+
+  return <HomePage discountedProducts={discountedProducts} popularProducts={popularProducts} categories={categories} />
 }

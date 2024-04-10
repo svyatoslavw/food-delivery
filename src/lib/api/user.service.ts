@@ -1,24 +1,24 @@
 import { createClient } from "@/lib/supabase/client"
+import { createServerClient } from "@/lib/supabase/server"
+import { IUser } from "@/types"
 
-const initUser = {
-  created_at: null,
-  role: null,
-  id: null
+
+const initUser: IUser = {
+  id: "",
+  created_at: "",
+  email: "",
+  role: ""
 }
 
 export const UserService = {
-  async getProfile() {
-    const supabase = createClient()
-    const { data } = await supabase.auth.getSession()
-    if (data.session?.user) {
-      const { data: user, error } = await supabase
-        .from("user")
-        .select("*")
-        .eq("id", data.session.user.id)
-        .single()
+  async getProfile(type: "client" | "server") {
+    const supabase = type === "server" ? createServerClient() : createClient()
+    const { data } = await supabase.auth.getUser()
+    if (data.user) {
+      const { data: user, error } = await supabase.from("user").select("*").eq("id", data.user.id).single()
 
-      if (!error) return user
+      if (!error) return user as IUser
     }
-    return initUser
+    return initUser as IUser
   }
 }

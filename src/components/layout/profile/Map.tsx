@@ -23,7 +23,6 @@ export default function Map({ location }: { location: string }) {
       zoom={10}
     >
       <TileLayer url="http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" />
-
       <Marker position={region?.coords ?? [49.989, 36.209]} icon={ICON} />
     </MapContainer>
   )
