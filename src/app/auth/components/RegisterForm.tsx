@@ -39,7 +39,7 @@ const RegisterForm = () => {
   async function onSubmit(data: z.infer<typeof RegisterSchema>) {
     await register(data).then(() => setClicked(true))
     form.reset()
-    toast.success("Account created successfully!", { cancel: "Close" })
+    toast.success("Account created successfully!", { cancel: { label: "Close" } })
   }
 
   const [clicked, setClicked] = useState(false)

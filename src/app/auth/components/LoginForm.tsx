@@ -29,7 +29,7 @@ const LoginForm = () => {
 
   async function onSubmit(data: z.infer<typeof LoginSchema>) {
     await login(data)
-    toast.success("Successfully login!")
+    toast.success("Successfully login!", { cancel: { label: "Close" } })
   }
 
   return (

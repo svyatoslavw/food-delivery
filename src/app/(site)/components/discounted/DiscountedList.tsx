@@ -2,13 +2,10 @@
 
 import { DiscountedItem } from "./DiscountedItem"
 import { Heading } from "@/components/ui/heading"
-import { ordersAtom as popularOrdersAtom } from "@/store"
+import { TAddToCard, ordersAtom as popularOrdersAtom } from "@/store"
 import type { IProduct } from "@/types"
 import { useSetAtom } from "jotai/index"
 import { toast } from "sonner"
-
-
-export type TAddToCard = (item: IProduct) => void
 
 const DiscountedList = ({ products }: { products: IProduct[] }) => {
   const setOrders = useSetAtom(popularOrdersAtom)

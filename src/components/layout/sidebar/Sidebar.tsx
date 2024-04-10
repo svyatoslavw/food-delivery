@@ -4,7 +4,6 @@ import { BeefIcon, PackageCheckIcon, SandwichIcon, SettingsIcon, StarIcon } from
 import { usePathname } from "next/navigation"
 import { useMemo } from "react"
 
-
 const Sidebar = () => {
   const pathname = usePathname()
   const routes: ISideLink[] = useMemo(
@@ -19,7 +18,7 @@ const Sidebar = () => {
         label: "Menu",
         href: "/menu",
         Icon: SandwichIcon,
-        isActive: pathname === "/menu"
+        isActive: pathname === "/menu" || pathname.startsWith("/product")
       },
       {
         label: "Food order",

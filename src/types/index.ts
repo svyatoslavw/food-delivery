@@ -4,6 +4,7 @@ export interface IProduct {
   id: number
   created_at: string
   title: string
+  slug: string
   description: string
   image_url: string
   price: number

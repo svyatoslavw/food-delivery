@@ -1,7 +1,6 @@
 import { logout } from "@/app/auth/actions"
-import { type CookieOptions, createServerClient } from "@supabase/ssr"
-import { type NextRequest, NextResponse } from "next/server"
-
+import { createServerClient, type CookieOptions } from "@supabase/ssr"
+import { NextResponse, type NextRequest } from "next/server"
 
 export async function updateSession(request: NextRequest) {
   const PROTECTED_PATHS = ["/settings", "orders"]
@@ -59,7 +58,7 @@ export async function updateSession(request: NextRequest) {
     error
   } = await supabase.auth.getUser()
 
-  if (error?.code === "UND_ERR_CONNECT_TIMEOUT") {
+  if (error?.name === "ConnectTimeoutError") {
     logout()
   }
 

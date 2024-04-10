@@ -4,7 +4,6 @@ import { PopularList } from "@/app/(site)/components/popular/PopularList"
 import Header from "@/components/layout/header/Header"
 import type { ICategory, IProduct } from "@/types"
 
-
 interface IHomePage {
   discountedProducts: IProduct[]
   popularProducts: IProduct[]
