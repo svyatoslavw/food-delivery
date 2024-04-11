@@ -14,7 +14,7 @@ const OrderList = () => {
   const orders = useAtomValue(orderListOrdersAtom)
   const setOrders = useSetAtom(orderListOrdersAtom)
 
-  const total = orders.reduce((acc, item) => acc + item.product.price * item.quantity, 0)
+  const total = orders.reduce((acc, item) => acc + (item.product.price - (item.product.price * item.product.discount) / 100) * item.quantity, 0)
 
   const transitions = useTransition(orders, {
     from: { opacity: 0, height: 0 },

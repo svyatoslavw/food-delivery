@@ -2,6 +2,7 @@ import { ProductSlugPage } from "./components/ProductSlugPage"
 import { ProductService } from "@/lib/api/product.service"
 import type { Metadata } from "next"
 
+
 type TypeParamProductSlug = {
   slug?: string
 }
@@ -31,9 +32,7 @@ export async function generateStaticParams() {
 }
 
 async function getProduct(params: TypeParamProductSlug) {
-  const data = await ProductService.getBySlug(params?.slug as string)
-
-  return data
+  return await ProductService.getBySlug(params?.slug as string)
 }
 
 export default async function Product({ params }: IPageProductSlug) {

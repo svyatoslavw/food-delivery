@@ -9,6 +9,7 @@ export interface IProduct {
   image_url: string
   price: number
   discount: number
+  category_id: string
 }
 
 export interface ICategory {
@@ -44,6 +45,23 @@ export enum EnumOrderStatus {
   PAYED = "PAYED",
   SHIPPED = "SHIPPED",
   DELIVERED = "DELIVERED"
+}
+
+export enum EnumProductSort {
+  HIGH_PRICE = "high-price",
+  LOW_PRICE = "low-price",
+  NEWEST = "newest",
+  OLDEST = "oldest"
+}
+
+export type TQueryParams = {
+  sort?: EnumProductSort | string
+  searchTerm?: string
+  page?: string | number
+  perPage: string | number
+  minPrice?: string
+  maxPrice?: string
+  category: string
 }
 
 export interface IOrder {

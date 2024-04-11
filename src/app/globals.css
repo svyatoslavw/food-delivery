@@ -33,30 +33,6 @@
     --ring: 0 0% 3.9%;
 
     --radius: 0.5rem;
-
-    /* * {
-      --scroll-track-color: #FFFFFF;
-      --scroll-thumb-color: #8e001b;
-      --scroll-size: 6px;
-    }
-
-    *::-webkit-scrollbar {
-      width: var(--scroll-size);
-    }
-
-    *::-webkit-scrollbar-track {
-      background: var(--scroll-track-color);
-    }
-
-    *::-webkit-scrollbar-thumb {
-      background: var(--scroll-thumb-color);
-    }
-
-    @supports not selector(::-webkit-scrollbar) {
-      body {
-        scrollbar-color: var(--scroll-thumb-color) var(--scroll-track-color);
-      }
-    } */
   }
 
   .dark {
@@ -87,31 +63,6 @@
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
-
-    /* * {
-      --scroll-track-color: #111111;
-      --scroll-thumb-color: #8e001b;
-      --scroll-size: 6px;
-    }
-
-    *::-webkit-scrollbar {
-      width: var(--scroll-size);
-    }
-
-    *::-webkit-scrollbar-track {
-      background: var(--scroll-track-color);
-    }
-
-    *::-webkit-scrollbar-thumb {
-      background: var(--scroll-thumb-color);
-      border-radius: 8px;
-    }
-
-    @supports not selector(::-webkit-scrollbar) {
-      body {
-        scrollbar-color: var(--scroll-thumb-color) var(--scroll-track-color);
-      }
-    } */
   }
 }
 
@@ -122,5 +73,30 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+* {
+  --scroll-track-color: transparent;
+  --scroll-thumb-color: #8e001b;
+  --scroll-size: 8px;
+}
+
+*::-webkit-scrollbar {
+  width: var(--scroll-size);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scroll-track-color);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb-color);
+  border-radius: 8px;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--scroll-thumb-color) var(--scroll-track-color);
   }
 }

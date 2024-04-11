@@ -2,7 +2,6 @@ import { CategoryItem } from "./CategoryItem"
 import { Heading } from "@/components/ui/heading"
 import { ICategory } from "@/types"
 
-
 interface ICategoryList {
   categories: ICategory[]
   isMain?: boolean
@@ -15,7 +14,7 @@ const CategoryList = ({ categories, isMain = false, href = "" }: ICategoryList) 
       <Heading text="Category" href={href} isLink={isMain} />
       <div className="flex w-full gap-4 justify-between">
         {categories.map((item) => (
-          <CategoryItem item={item} key={item.id} />
+          <CategoryItem isMain={isMain} item={item} key={item.id} />
         ))}
       </div>
     </div>

@@ -2,6 +2,7 @@ import { convertCurrency } from "@/lib/utils"
 import type { IProduct } from "@/types"
 import { Rating } from "react-simple-star-rating"
 
+
 const ProductInformation = ({ product }: { product: IProduct }) => {
   return (
     <>

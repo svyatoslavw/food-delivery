@@ -2,10 +2,11 @@
 
 import { CreateProductReview } from "./CreateProductReview"
 import { ProductInformation } from "./ProductInformation"
-import { AddToCardButton } from "./addToCardButton"
+import { AddToCardButton } from "@/app/product/[slug]/components/AddToCardButton"
 import { useLoadImage } from "@/hooks/useLoadImage"
 import type { IProduct } from "@/types"
 import Image from "next/image"
+
 
 const ProductSlugItem = ({ product }: { product: IProduct }) => {
   const image = useLoadImage(product)

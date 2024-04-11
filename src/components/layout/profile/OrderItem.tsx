@@ -22,7 +22,7 @@ const OrderItem = ({ item, addProduct, removeProduct }: OrderItemProps) => {
       <Image src={image ?? "/burger_default.png"} alt={item.product.title} width={80} height={80} />
       <div className={"flex flex-col w-full"}>
         <h4>
-          {item.product.title} | {convertCurrency(item.product.price)}
+          {item.product.title} | {convertCurrency(item.product.price - (item.product.price * item.product.discount) / 100)}
         </h4>
         <div className={"flex w-full justify-between"}>
           <span className={"font-medium"}>x{item.quantity}</span>

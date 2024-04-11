@@ -24,17 +24,17 @@ const Profile = async () => {
           <SheetTitle>Your Profile</SheetTitle>
           <SheetDescription className="flex items-center gap-2 border-b border-primary/30 py-3">
             <CircleUserIcon size={40} />
-            <div>
-              <h3 className="font-medium">{user.email}</h3>
-              <h5 className={"text-xs"}>{user.role}</h5>
-            </div>
+            <>
+              <span className="font-medium">{user.email}</span>
+              <span className={"text-xs"}>{user.role}</span>
+            </>
           </SheetDescription>
         </SheetHeader>
-        <div className="flex py-4 px-2 flex-col gap-5 text-neutral-500 dark:text-neutral-300">
+        <span className="flex py-4 px-2 flex-col gap-5 text-neutral-500 dark:text-neutral-300">
           <BonusBalance />
           <Address />
           <OrderList />
-        </div>
+        </span>
       </SheetContent>
     </Sheet>
   )

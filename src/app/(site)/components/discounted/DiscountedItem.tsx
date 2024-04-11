@@ -1,13 +1,13 @@
 "use client"
 
-import { TAddToCard } from "@/app/(site)/components/discounted/DiscountedList"
 import { Button } from "@/components/ui/button"
 import { useLoadImage } from "@/hooks/useLoadImage"
 import { cn, convertCurrency } from "@/lib/utils"
+import { TAddToCard } from "@/store"
 import type { IProduct } from "@/types"
 import { HeartIcon, PlusIcon } from "lucide-react"
 import Image from "next/image"
-import React from "react"
+import Link from "next/link"
 
 
 interface IPopularItem {
@@ -32,10 +32,14 @@ const DiscountedItem = ({ product, addToCart }: IPopularItem) => {
           )}
         />
       </div>
-      <Image draggable={false} src={image ?? "/burger_default.png"} width={280} height={280} alt={product.title} />
+      <Link href={`/product/${product.slug}`}>
+        <Image draggable={false} src={image ?? "/burger_default.png"} width={280} height={280} alt={product.title} />
+      </Link>
       <div className="flex w-full justify-between px-6">
         <div>
-          <h4 className="text-lg">{product.title}</h4>
+          <Link href={`/product/${product.slug}`} className={"text-lg hover:underline"}>
+            <h4>{product.title}</h4>
+          </Link>
           <div className={"flex gap-2"}>
             <h6
               className={cn("text-2xl font-semibold", {
