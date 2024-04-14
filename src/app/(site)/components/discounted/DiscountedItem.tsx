@@ -3,22 +3,49 @@
 import { Button } from "@/components/ui/button"
 import { useLoadImage } from "@/hooks/useLoadImage"
 import { cn, convertCurrency } from "@/lib/utils"
-import { TAddToCard } from "@/store"
+import { ordersAtom as popularOrdersAtom, TAddToCard } from "@/store"
 import type { IProduct } from "@/types"
+import { useSetAtom } from "jotai/index"
 import { HeartIcon, PlusIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { toast } from "sonner"
 
 
 interface IPopularItem {
   product: IProduct
-  addToCart: TAddToCard
 }
 
-const DiscountedItem = ({ product, addToCart }: IPopularItem) => {
+const DiscountedItem = ({ product }: IPopularItem) => {
   const image = useLoadImage(product)
   const total = product.price - (product.price * product.discount) / 100
+  const setOrders = useSetAtom(popularOrdersAtom)
 
+  const addToCart: TAddToCard = (item: IProduct) => {
+    setOrders((prev) => {
+      const existIndex = prev.findIndex((order) => order.product.title === item.title)
+      if (existIndex !== -1) {
+        return prev.map((order, index) =>
+          index === existIndex
+            ? {
+                ...order,
+                quantity: order.quantity + 1
+              }
+            : order
+        )
+      } else {
+        return [
+          ...prev,
+          {
+            id: prev.length,
+            quantity: 1,
+            product: { ...item }
+          }
+        ]
+      }
+    })
+    toast.success("Product successfully added to cart")
+  }
   return (
     <div className="flex h-auto aspect-square object-cover w-full flex-col items-center justify-around gap-2 bg-secondary/30 border-4 rounded-lg p-2 text-neutral-500 dark:text-neutral-300 transition-all duration-200 border-transparent hover:-translate-y-2 hover:border-b-red-400">
       <div className={"flex justify-between w-full px-2 py-0.5"}>

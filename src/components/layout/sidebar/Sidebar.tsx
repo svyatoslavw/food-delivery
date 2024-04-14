@@ -4,6 +4,9 @@ import { BeefIcon, PackageCheckIcon, SandwichIcon, SettingsIcon, StarIcon } from
 import { usePathname } from "next/navigation"
 import { useMemo } from "react"
 
+
+const DEFAULT_CATEGORY = "?category=97bca986-60a5-4df7-a1dd-d2435442efbf&page=1"
+
 const Sidebar = () => {
   const pathname = usePathname()
   const routes: ISideLink[] = useMemo(
@@ -16,7 +19,7 @@ const Sidebar = () => {
       },
       {
         label: "Menu",
-        href: "/menu",
+        href: "/menu" + DEFAULT_CATEGORY,
         Icon: SandwichIcon,
         isActive: pathname === "/menu" || pathname.startsWith("/product")
       },

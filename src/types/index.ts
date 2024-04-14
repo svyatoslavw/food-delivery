@@ -62,6 +62,7 @@ export type TQueryParams = {
   minPrice?: string
   maxPrice?: string
   category: string
+  isFilterUpdated: boolean
 }
 
 export interface IOrder {

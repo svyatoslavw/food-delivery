@@ -1,4 +1,4 @@
-import { isFilterUpdatedAtom, queryParamsAtom } from "@/store"
+import { queryParamsAtom } from "@/store"
 import { TQueryParams } from "@/types"
 import { useAtomValue } from "jotai"
 import { useSetAtom } from "jotai/index"
@@ -13,9 +13,6 @@ export const useFilter = (isMain?: boolean) => {
   const queryParams = useAtomValue<Partial<TQueryParams>>(queryParamsAtom)
   const setQueryParams = useSetAtom(queryParamsAtom)
 
-  const isFilterUpdated = useAtomValue(isFilterUpdatedAtom)
-  const setIsFilterUpdated = useSetAtom(isFilterUpdatedAtom)
-
   const { replace } = useRouter()
 
   React.useEffect(() => {
@@ -27,30 +24,30 @@ export const useFilter = (isMain?: boolean) => {
     })
   }, [])
 
-  const updateQueryParams = React.useCallback(
-    (key: keyof TQueryParams, value: string) => {
-      const newParams = new URLSearchParams(searchParams.toString())
+  const updateQueryParams = (values: Partial<TQueryParams>) => {
+    const newParams = new URLSearchParams(searchParams.toString())
 
-      if (value) {
-        newParams.set(key, String(value))
-      } else {
-        newParams.delete(key)
+    for (const key in values) {
+      if (Object.prototype.hasOwnProperty.call(values, key)) {
+        const value = values[key as keyof TQueryParams]
+        if (value) {
+          newParams.set(key, String(value))
+        } else {
+          newParams.delete(key)
+        }
       }
+    }
+    replace(pathname + (isMain ? "menu" : "") + (newParams.toString() ? `?${newParams.toString()}` : ""))
+    setQueryParams((prev) => ({
+      ...prev,
+      ...values
+    }))
+  }
 
-      replace(pathname + isMain && "/menu" + (newParams.toString() ? `?${newParams.toString()}` : ""))
-      setQueryParams((prev) => ({
-        ...prev,
-        [key]: value
-      }))
-      setIsFilterUpdated(true)
-    },
-    [queryParams, searchParams, pathname, isMain]
-  )
-
-  const value = React.useMemo(() => ({ queryParams, isFilterUpdated }), [queryParams, isFilterUpdated])
+  const value = React.useMemo(() => ({ queryParams }), [queryParams])
 
   return {
-    ...value,
+    queryParams,
     updateQueryParams
   }
 }
