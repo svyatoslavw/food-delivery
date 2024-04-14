@@ -1,40 +1,21 @@
-import { login } from "@/app/auth/actions"
+import { OAuthButton } from "./OAuthButton"
+import { useLoginForm } from "@/app/auth/hooks/useLoginForm"
+import { GithubIcon } from "@/components/icons/github"
+import { GoogleIcon } from "@/components/icons/google"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { PasswordInput } from "@/components/ui/password-input"
 import { cn } from "@/lib/utils"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon } from "lucide-react"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import * as z from "zod"
 
-
-export const LoginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1, {
-    message: "Password is required."
-  })
-})
 
 const LoginForm = () => {
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
-    defaultValues: {
-      email: "",
-      password: ""
-    }
-  })
-
-  async function onSubmit(data: z.infer<typeof LoginSchema>) {
-    await login(data)
-    toast.success("Successfully login!", { cancel: { label: "Close" } })
-  }
+  const { form, state, functions } = useLoginForm()
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-3">
+      <form onSubmit={functions.onSubmit} className="w-full space-y-3">
         <FormField
           control={form.control}
           name="email"
@@ -62,10 +43,16 @@ const LoginForm = () => {
             </FormItem>
           )}
         />
-        <Button disabled={!form.formState.isDirty || form.formState.isSubmitting} type="submit" className="w-full flex gap-2">
-          {form.formState.isSubmitting && <LoaderIcon size={14} className={cn("animate-spin")} />}
+        <Button disabled={!form.formState.isDirty || state.isLoading} type="submit" className="w-full flex gap-2">
+          {state.isLoading && <LoaderIcon size={14} className={cn("animate-spin")} />}
           Login
         </Button>
+        <OAuthButton text="google" provider="google">
+          <GoogleIcon />
+        </OAuthButton>
+        <OAuthButton text="github" provider="github">
+          <GithubIcon />
+        </OAuthButton>
       </form>
     </Form>
   )

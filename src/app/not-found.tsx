@@ -2,12 +2,12 @@ import Link from "next/link"
 
 export default function NotFound() {
   return (
-    <div className="justify-center items-center">
-      <h1 className="text-5xl">Not found 404!</h1>
-      <p className="text-2xl ">Этой страницы не существует</p>
-      <div>
-        <Link href="/" className="my-4">
-          Вернуться на главную
+    <div className="flex flex-col w-full min-h-screen gap-2 justify-center items-center">
+      <h1 className="text-8xl font-semibold">404!</h1>
+      <div className={"text-center"}>
+        <p className="text-xl">This page does not exist</p>
+        <Link href="/" className="my-4 text-xs underline underline-offset-2">
+          Go back to the home page
         </Link>
       </div>
     </div>

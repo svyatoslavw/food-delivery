@@ -2,7 +2,6 @@ import { createClient } from "@/lib/supabase/client"
 import { createServerClient } from "@/lib/supabase/server"
 import { IUser } from "@/types"
 
-
 const initUser: IUser = {
   id: "",
   created_at: "",

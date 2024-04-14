@@ -20,7 +20,7 @@ const ProductSlugItem = ({ product }: { product: IProduct }) => {
           alt={product.title}
           width={550}
           height={550}
-          className={"object-cover aspect-square p-3 bg-secondary/10 rounded-2xl"}
+          className={"object-cover aspect-square p-3 bg-secondary dark:bg-secondary/30 rounded-2xl"}
         />
         <AddToCardButton product={product} />
       </div>

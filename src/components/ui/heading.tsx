@@ -19,7 +19,7 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(({ className,
       <div className="flex gap-1.5 items-center">
         {isLink && (
           <Link href={href} className="flex cursor-pointer items-center gap-2 text-red-600">
-            <span className="hover:underline underline-offset-2">View all</span>
+            <span className="hover:underline text-sm underline-offset-2">View all</span>
             <ChevronRightIcon className=" transition-transform hover:scale-150" size={16} />
           </Link>
         )}

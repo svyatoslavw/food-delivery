@@ -3,6 +3,7 @@
 import { getCountryByValue } from "@/lib/utils"
 import { icon } from "leaflet"
 import "leaflet/dist/leaflet.css"
+import { useTheme } from "next-themes"
 import React from "react"
 import { MapContainer, Marker, TileLayer } from "react-leaflet"
 
@@ -12,17 +13,20 @@ const ICON = icon({
   iconSize: [50, 50]
 })
 export default function Map({ location }: { location: string }) {
+  const { theme } = useTheme()
   const region = getCountryByValue(location)
   return (
     <MapContainer
       zoomControl={false}
-      dragging={false}
+      //dragging={false}
       scrollWheelZoom={false}
       className="h-[50vh] rounded-lg relative z-0"
       center={region?.coords ?? [49.989, 36.209]}
       zoom={10}
     >
-      <TileLayer url="http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" />
+      <TileLayer
+        url={theme === "dark" ? "http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
+      />
       <Marker position={region?.coords ?? [49.989, 36.209]} icon={ICON} />
     </MapContainer>
   )

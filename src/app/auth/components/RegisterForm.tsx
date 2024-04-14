@@ -1,15 +1,14 @@
-import { register } from "@/app/auth/actions"
+import { OAuthButton } from "./OAuthButton"
+import { useRegisterForm } from "@/app/auth/hooks/useRegisterForm"
+import { GithubIcon } from "@/components/icons/github"
+import { GoogleIcon } from "@/components/icons/google"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { PasswordInput } from "@/components/ui/password-input"
 import { cn } from "@/lib/utils"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon } from "lucide-react"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import * as z from "zod";
+import * as z from "zod"
 
 
 export const RegisterSchema = z
@@ -27,26 +26,11 @@ export const RegisterSchema = z
     path: ["confirm"]
   })
 const RegisterForm = () => {
-  const form = useForm<z.infer<typeof RegisterSchema>>({
-    resolver: zodResolver(RegisterSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      confirm: ""
-    }
-  })
-
-  async function onSubmit(data: z.infer<typeof RegisterSchema>) {
-    await register(data).then(() => setClicked(true))
-    form.reset()
-    toast.success("Account created successfully!", { cancel: { label: "Close" } })
-  }
-
-  const [clicked, setClicked] = useState(false)
+  const { form, state, functions } = useRegisterForm()
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-3">
+      <form onSubmit={functions.onSubmit} className="w-full space-y-3">
         <FormField
           control={form.control}
           name="email"
@@ -89,11 +73,16 @@ const RegisterForm = () => {
             </FormItem>
           )}
         />
-        {clicked && <div className="text-sm w-full text-center">Sign up link sent! Go confirm your email.</div>}
-        <Button disabled={!form.formState.isDirty || form.formState.isSubmitting} type="submit" className="w-full flex gap-2">
-          {form.formState.isSubmitting && <LoaderIcon size={14} className={cn("animate-spin")} />}
+        <Button disabled={!form.formState.isDirty || state.isLoading} type="submit" className="w-full flex gap-2">
+          {state.isLoading && <LoaderIcon size={14} className={cn("animate-spin")} />}
           Register
         </Button>
+        <OAuthButton text="google" provider="google">
+          <GoogleIcon />
+        </OAuthButton>
+        <OAuthButton text="github" provider="github">
+          <GithubIcon />
+        </OAuthButton>
       </form>
     </Form>
   )

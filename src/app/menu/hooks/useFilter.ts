@@ -22,7 +22,7 @@ export const useFilter = (isMain?: boolean) => {
         [key]: value
       }))
     })
-  }, [])
+  }, [searchParams, setQueryParams])
 
   const updateQueryParams = (values: Partial<TQueryParams>) => {
     const newParams = new URLSearchParams(searchParams.toString())

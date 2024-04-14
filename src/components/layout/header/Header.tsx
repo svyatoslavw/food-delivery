@@ -1,11 +1,10 @@
+import { AdminLink } from "./AdminLink"
 import RegisterOrLoginButton from "@/components/layout/header/RegisterOrLoginButton"
 import { Profile } from "@/components/layout/profile/Profile"
 import { Heading } from "@/components/ui/heading"
 import { Input } from "@/components/ui/input"
 import { ThemeToggler } from "@/components/ui/theme-toggler"
 import { SearchIcon } from "lucide-react"
-import React from "react"
-
 
 const Header = () => {
   return (
@@ -15,6 +14,7 @@ const Header = () => {
         <Input placeholder="What do you want eat today..." className="w-[360px] pl-10" />
       </label>
       <ThemeToggler />
+      <AdminLink />
       <Profile />
       <RegisterOrLoginButton />
     </Heading>

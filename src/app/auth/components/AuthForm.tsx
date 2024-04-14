@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const AuthForm = () => {
   return (
-    <div className="flex justify-center items-center h-screen">
+    <section className="flex justify-center items-center h-screen">
       <div className="w-96 dark:bg-black bg-white p-3 rounded-xl">
         <div className="w-full space-y-3">
           <Tabs defaultValue="login" className="w-full">
@@ -26,10 +26,9 @@ const AuthForm = () => {
               <RegisterForm />
             </TabsContent>
           </Tabs>
-          {/*<OAuthForm/>*/}
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

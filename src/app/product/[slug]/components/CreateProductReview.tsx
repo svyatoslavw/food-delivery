@@ -7,6 +7,7 @@ import { Rating } from "react-simple-star-rating"
 import { toast } from "sonner"
 import * as z from "zod"
 
+
 export const Schema = z.object({
   text: z.string().min(10, "You text must contain at least 10 characters").max(100),
   rating: z.number().min(0.5).max(5)
@@ -28,7 +29,7 @@ const CreateProductReview = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit} className="p-2 bg-secondary/20 gap-2 flex flex-col rounded-xl">
+      <form onSubmit={onSubmit} className="p-2 bg-secondary dark:bg-secondary/30 gap-2 flex flex-col rounded-xl">
         <FormField
           control={form.control}
           name="text"

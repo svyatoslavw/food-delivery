@@ -1,7 +1,6 @@
-import { createClient } from "../supabase/client"
+import { createClient } from "@/lib/supabase/client"
 import { createServerClient } from "@/lib/supabase/server"
 import type { IProduct } from "@/types"
-
 
 export const ProductService = {
   async getPopular() {
@@ -21,9 +20,9 @@ export const ProductService = {
     const { data: products, error } = await supabase
       .from("product")
       .select("*")
-      .order("created_at", { ascending: false })
+      .order("discount", { ascending: false })
       .filter("discount", "gt", 0)
-      .range(0, 2)
+      .range(0, 4)
 
     if (error) {
       console.log(error.message)
@@ -41,6 +40,32 @@ export const ProductService = {
     }
 
     return (products as IProduct[]) || []
+  },
+  async getAllWithFilters(searchParams: { [key: string]: string | string[] | undefined }) {
+    const page = searchParams["page"] ?? "1"
+    const per_page = "10"
+    const supabase = createServerClient()
+
+    const { data: products, error } = await supabase
+      .from("product")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .range((+page - 1) * +per_page, +page * +per_page - 1)
+
+    if (error) {
+      console.log(error.message)
+    }
+
+    return (products as IProduct[]) || []
+  },
+  async getCountAllProducts() {
+    const supabase = createServerClient()
+    const { count, error } = await supabase.from("product").select("count", { count: "exact" })
+    if (error) {
+      return 0
+    } else {
+      return count
+    }
   },
   async getBySlug(slug: string) {
     const supabase = createServerClient()

@@ -1,6 +1,8 @@
 {
   "name": "food-delivery",
   "version": "1.0.0",
+  "author": "svyatosravw",
+  "description": "supabase & stripe food app",
   "private": true,
   "scripts": {
     "dev": "next dev",

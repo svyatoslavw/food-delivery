@@ -1,7 +1,6 @@
 import { UserService } from "@/lib/api/user.service"
 import { useQuery } from "@tanstack/react-query"
 
-
 const useProfile = (type: "client" | "server") => {
   const { data: user, isLoading } = useQuery({
     queryKey: ["profile"],

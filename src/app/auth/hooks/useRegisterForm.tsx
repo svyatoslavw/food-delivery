@@ -1,4 +1,5 @@
 import { login } from "@/app/auth/actions"
+import { PUBLIC_URL } from "@/lib/config/url.config"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
@@ -6,41 +7,48 @@ import { toast } from "sonner"
 import { z } from "zod"
 
 
-export const LoginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1, {
-    message: "Password is required."
+export const RegisterSchema = z
+  .object({
+    email: z.string().email("Enter a valid email"),
+    password: z.string().min(6, {
+      message: "Password must have than 6 characters."
+    }),
+    confirm: z.string().min(6, {
+      message: "Enter your password again"
+    })
   })
-})
-
-export const useLoginForm = () => {
+  .refine((data) => data.confirm === data.password, {
+    message: "Password didn't match",
+    path: ["confirm"]
+  })
+export const useRegisterForm = () => {
   const { replace } = useRouter()
 
-  const loginForm = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const registerForm = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: "",
-      password: ""
+      password: "",
+      confirm: ""
     }
   })
 
-  const onSubmit = loginForm.handleSubmit(async (data: z.infer<typeof LoginSchema>) => {
+  const onSubmit = registerForm.handleSubmit(async (data: z.infer<typeof RegisterSchema>) => {
     const res = await login(data)
     const { error } = JSON.parse(res)
     if (!error) {
-      toast.success("Successfully login!", { cancel: { label: "Close" } })
-      replace("/")
+      toast.success("Account created successfully!", { cancel: { label: "Close" } })
+      replace(PUBLIC_URL.home())
     } else {
-      toast.error("Invalid login credentials!", { cancel: { label: "Close" } })
+      toast.error("Something went wrong!", { cancel: { label: "Close" } })
     }
   })
 
   return {
     state: {
-      isLoading: loginForm.formState.isSubmitting,
-      isDirty: !loginForm.formState.isDirty
+      isLoading: registerForm.formState.isSubmitting
     },
-    form: loginForm,
+    form: registerForm,
     functions: { onSubmit }
   }
 }

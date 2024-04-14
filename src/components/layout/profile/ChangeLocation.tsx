@@ -2,7 +2,7 @@
 
 import { REGIONS } from "@/components/layout/profile/countries.data"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
 import dynamic from "next/dynamic"
@@ -41,11 +41,9 @@ const ChangeLocation = () => {
         </Select>
         <LazyMap location={location} />
         <DialogFooter className="sm:justify-start">
-          <DialogClose asChild>
-            <Button type="button" variant="default">
-              Save location
-            </Button>
-          </DialogClose>
+          <Button type="button" variant="default">
+            Save location
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

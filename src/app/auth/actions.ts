@@ -1,42 +1,44 @@
 "use server"
 
-import { LoginSchema } from "@/app/auth/components/LoginForm"
-import { RegisterSchema } from "@/app/auth/components/RegisterForm"
+import { LoginSchema } from "@/app/auth/hooks/useLoginForm"
+import { RegisterSchema } from "@/app/auth/hooks/useRegisterForm"
 import { createServerClient } from "@/lib/supabase/server"
 import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
 import * as z from "zod"
-
 
 export async function login(data: z.infer<typeof LoginSchema>) {
   const supabase = createServerClient()
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const res = await supabase.auth.signInWithPassword({
     email: data.email as string,
     password: data.password as string
   })
 
-  if (error) {
-    console.error(error)
-    return false
-  }
-
   revalidatePath("/", "layout")
-  redirect("/")
+  return JSON.stringify(res)
 }
 
 export async function register(data: z.infer<typeof RegisterSchema>) {
   const supabase = createServerClient()
 
-  const { error } = await supabase.auth.signUp({
+  const res = await supabase.auth.signUp({
     email: data.email,
     password: data.password
   })
 
-  if (error) {
-    console.error(error)
-    return
-  }
+  return JSON.stringify(res)
+}
+
+export async function loginWithOAuth(next: string, provider: "github" | "google") {
+  const supabase = createServerClient()
+
+  const res = await supabase.auth.signInWithOAuth({
+    provider,
+    options: { redirectTo: "/auth/callback?next=" + next }
+  })
+
+  revalidatePath("/", "layout")
+  return JSON.stringify(res)
 }
 
 export async function logout() {
@@ -47,7 +49,7 @@ export async function logout() {
     console.error(error)
   }
 
-  revalidatePath("/login")
+  revalidatePath("/auth")
   revalidatePath("/orders")
   revalidatePath("/", "layout")
 }

@@ -19,8 +19,8 @@ const OrderItem = ({ item, addProduct, removeProduct }: OrderItemProps) => {
 
   return (
     <div className={"flex gap-2 items-center"}>
-      <Image src={image ?? "/burger_default.png"} alt={item.product.title} width={80} height={80} />
-      <div className={"flex flex-col w-full"}>
+      <Image src={image ?? "/burger_default.png"} alt={item.product.title} className={"object-cover aspect-square flex"} width={70} height={70} />
+      <div className={"flex flex-col w-full text-sm"}>
         <h4>
           {item.product.title} | {convertCurrency(item.product.price - (item.product.price * item.product.discount) / 100)}
         </h4>

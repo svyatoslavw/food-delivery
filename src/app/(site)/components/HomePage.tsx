@@ -4,7 +4,6 @@ import { PopularList } from "@/app/(site)/components/popular/PopularList"
 import Header from "@/components/layout/header/Header"
 import type { ICategory, IProduct } from "@/types"
 
-
 interface IHomePage {
   discountedProducts: IProduct[]
   popularProducts: IProduct[]
@@ -13,7 +12,7 @@ interface IHomePage {
 
 const HomePage = ({ popularProducts, categories, discountedProducts }: IHomePage) => {
   return (
-    <div>
+    <main>
       <Header />
       {/*<div className="flex h-44 w-full justify-between rounded-xl bg-red-500 px-8">*/}
       {/*  <div className="flex flex-col justify-center">*/}
@@ -27,7 +26,7 @@ const HomePage = ({ popularProducts, categories, discountedProducts }: IHomePage
       <CategoryList categories={categories} isMain href="/menu" />
       <PopularList products={popularProducts} />
       <DiscountedList products={discountedProducts} />
-    </div>
+    </main>
   )
 }
 

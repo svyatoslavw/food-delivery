@@ -3,32 +3,25 @@
 import { useFilter } from "../hooks/useFilter"
 import Pagination from "./Pagination"
 import { ProductItem } from "./ProductItem"
-import { IProduct } from "@/types"
-import { LoaderIcon } from "lucide-react"
+import type { IProduct, IUser } from "@/types"
 
 
 interface IProductList {
   initialProducts: IProduct[]
   count: number
+  user: IUser
 }
 
-const ProductList = ({ initialProducts, count }: IProductList) => {
+const ProductList = ({ initialProducts, count, user }: IProductList) => {
   const { queryParams, updateQueryParams } = useFilter()
 
-  if (!initialProducts)
-    return (
-      <div className="w-full flex justify-center">
-        <LoaderIcon className="animate-spin" size={26} />
-      </div>
-    )
-
   return (
-    <>
+    <article>
       <div className="grid grid-cols-4 gap-4">
         {initialProducts?.length ? (
-          initialProducts.map((product) => <ProductItem product={product} key={product.id} />)
+          initialProducts.map((product) => <ProductItem product={product} user={user} key={product.id} />)
         ) : (
-          <div className="grid w-full text-xl col-span-full font-medium justify-center">Products not found!</div>
+          <div className="grid w-full text-xl col-span-full my-4 font-medium justify-center">Products not found!</div>
         )}
       </div>
       {initialProducts.length > 0 && (
@@ -38,7 +31,7 @@ const ProductList = ({ initialProducts, count }: IProductList) => {
           numberPages={Math.ceil(count / +queryParams.perPage!)}
         />
       )}
-    </>
+    </article>
   )
 }
 

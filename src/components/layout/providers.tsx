@@ -39,8 +39,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <QueryClientProvider client={client}>
         <NextThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <main className="flex">
-            {!pathname.includes("auth") && <Sidebar />}
-            <div className="w-full dark:bg-foreground/[0.02] bg-foreground/10 px-10 ">{children}</div>
+            {!pathname.includes("auth") && <Sidebar isAdmin={pathname.includes("admin")} />}
+            <div className="w-full dark:bg-foreground/[0.02] bg-foreground/[0.02] px-10 ">{children}</div>
           </main>
           <Toaster duration={TOASTER_DURATION} />
         </NextThemeProvider>

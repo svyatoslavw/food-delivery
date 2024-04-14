@@ -3,8 +3,6 @@
 import { PopularItem } from "@/app/(site)/components/popular/PopularItem"
 import { Heading } from "@/components/ui/heading"
 import type { IProduct } from "@/types"
-import React from "react"
-
 
 const PopularList = ({ products }: { products: IProduct[] }) => {
   return (

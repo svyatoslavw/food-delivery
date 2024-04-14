@@ -13,10 +13,6 @@ const Pagination = ({ numberPages, changePage, currentPage }: IPagination) => {
     <div className="text-center mx-auto justify-center mt-16 mb-4 flex w-full gap-2">
       {Array.from({ length: numberPages > 1 ? numberPages : 1 }).map((_, index) => {
         const pageNumber = (index + 1).toString()
-
-        console.log("@cuurr", currentPage)
-        console.log("@pagenum", pageNumber)
-
         return (
           <Button
             variant={currentPage === pageNumber ? "destructive" : "secondary"}

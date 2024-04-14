@@ -1,13 +1,15 @@
 import { SidebarItem } from "@/components/layout/sidebar/SidebarItem"
+import { PUBLIC_URL } from "@/lib/config/url.config"
 import type { ISideLink } from "@/types"
-import { BeefIcon, PackageCheckIcon, SandwichIcon, SettingsIcon, StarIcon } from "lucide-react"
+import { BeefIcon, MapPinnedIcon, PackageCheckIcon, SandwichIcon, SettingsIcon, StarIcon } from "lucide-react"
+import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useMemo } from "react"
 
 
 const DEFAULT_CATEGORY = "?category=97bca986-60a5-4df7-a1dd-d2435442efbf&page=1"
 
-const Sidebar = () => {
+const Sidebar = ({ isAdmin = false }: { isAdmin: boolean }) => {
   const pathname = usePathname()
   const routes: ISideLink[] = useMemo(
     () => [
@@ -45,15 +47,39 @@ const Sidebar = () => {
     [pathname]
   )
 
+  const routesAdmin: ISideLink[] = useMemo(
+    () => [
+      {
+        label: "Dashboard",
+        href: "/admin/dashboard",
+        Icon: MapPinnedIcon,
+        isActive: pathname === "/admin/dashboard"
+      },
+      {
+        label: "Home",
+        href: "/",
+        Icon: BeefIcon,
+        isActive: pathname === "/"
+      },
+      {
+        label: "Menu",
+        href: "/menu" + DEFAULT_CATEGORY,
+        Icon: SandwichIcon,
+        isActive: pathname === "/menu" || pathname.startsWith("/product")
+      }
+    ],
+    [pathname]
+  )
+
   return (
     <div className="flex h-svh w-64 flex-col items-center py-10 ">
-      <h1 className="text-shadow mb-10 text-2xl font-bold drop-shadow-lg">
+      <Link href={PUBLIC_URL.home()} className="text-shadow mb-10 text-2xl font-bold drop-shadow-lg cursor-pointer">
         GoMeal<span className="text-pink-500 drop-shadow-lg">.</span>
-      </h1>
+      </Link>
       <div className="flex flex-col gap-3">
-        {routes.map((route) => (
-          <SidebarItem {...route} key={route.href} />
-        ))}
+        {isAdmin
+          ? routesAdmin.map((route) => <SidebarItem {...route} key={route.href} />)
+          : routes.map((route) => <SidebarItem {...route} key={route.href} />)}
       </div>
     </div>
   )

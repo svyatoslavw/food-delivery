@@ -1,31 +1,48 @@
-import { TableCell, TableRow } from "@/components/ui/table"
 import { useLoadImage } from "@/hooks/useLoadImage"
+import { PUBLIC_URL } from "@/lib/config/url.config"
 import { convertCurrency } from "@/lib/utils"
 import { IProduct } from "@/types"
 import { SettingsIcon } from "lucide-react"
 import Image from "next/image"
-import React from "react"
+import Link from "next/link"
+import { Rating } from "react-simple-star-rating"
 
-
-const TableItem = ({ product }: { product: IProduct }) => {
+const ProductAdminItem = ({ product }: { product: IProduct }) => {
   const image = useLoadImage(product)
+
   return (
-    <TableRow key={product.id} className={"p-0 h-5"}>
-      <TableCell className="font-medium w-5 p-1">
-        <div className={"flex gap-3 items-center"}>
-          <SettingsIcon className={"hover:animate-spin hover:opacity-100 opacity-60"} />
-          <span>{product.title}</span>
+    <div
+      className={
+        "flex relative h-auto w-full flex-col transition-all duration-200 hover:-translate-y-1 items-start justify-center gap-2 bg-secondary/30 border-2 rounded-xl p-2 text-neutral-500 dark:text-neutral-300 hover:border-red-400"
+      }
+    >
+      <Link href={`/admin/dashboard/edit/${product.slug}`}>
+        <SettingsIcon className={"absolute top-2 right-2 opacity-50 transition hover:animate-spin hover:opacity-100"} />
+      </Link>
+      <div className={"flex"}>
+        <Link href={PUBLIC_URL.product(product.slug)} className={"object-cover aspect-square flex"}>
+          <Image src={image ?? "/burger_default.png"} alt={product.title} width={120} height={120} className={"object-cover"} />
+        </Link>
+        <div className={"py-6"}>
+          <Link href={PUBLIC_URL.product(product.slug)} className={"hover:underline text-sm line-clamp-1"}>
+            {product.title}
+          </Link>
+          <div className={"text-base font-semibold"}>{convertCurrency(product.price)}</div>
+          <Rating
+            readonly
+            initialValue={2}
+            SVGstyle={{
+              display: "inline-block"
+            }}
+            fillColor="red"
+            size={12}
+            allowFraction
+          />
         </div>
-      </TableCell>
-      <TableCell className={"text-start w-5 p-0.5"}>{convertCurrency(product.price)}</TableCell>
-      <TableCell className={"text-center w-5 p-0.5"}>{product.discount}%</TableCell>
-      <TableCell className={"text-start w-5 p-0.5"}>
-        <div className={"flex items-center w-full justify-center"}>
-          <Image draggable={false} src={image ?? "burger_default.png"} alt={product.slug} width={70} height={70} />
-        </div>
-      </TableCell>
-    </TableRow>
+      </div>
+      <div className={"line-clamp-2 text-xs"}>{product.description}</div>
+    </div>
   )
 }
 
-export default TableItem
+export default ProductAdminItem

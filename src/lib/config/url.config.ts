@@ -6,13 +6,12 @@ export const PUBLIC_URL = {
   favorites: () => "/favorites",
   settings: () => "/settings",
 
-  login: () => "/auth/login",
-  register: () => "/auth/register",
+  auth: () => "/auth",
 
-  playlist: (slug = "") => PUBLIC_URL.root(`playlist${slug ? "/" + slug : ""}`),
-  track: (slug = "") => PUBLIC_URL.root(`track${slug ? "/" + slug : ""}`)
+  product: (slug = "") => PUBLIC_URL.root(`product${slug ? "/" + slug : ""}`)
 }
 
 export const ADMIN_URL = {
-  root: (url = "") => `/admin${url ? "/" + url : ""}`
+  root: (url = "") => `/admin${url ? "/" + url : ""}`,
+  dashboard: () => ADMIN_URL.root("dashboard")
 }

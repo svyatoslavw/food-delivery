@@ -1,30 +1,27 @@
 "use client"
 
 import { OrderItem } from "@/components/layout/profile/OrderItem"
+import { Button } from "@/components/ui/button"
 import { Heading } from "@/components/ui/heading"
+import { checkout } from "@/lib/stripe/actions"
 import { convertCurrency } from "@/lib/utils"
 import { ordersAtom as orderListOrdersAtom, TChngQualityProduct } from "@/store"
-import { a, useTransition } from "@react-spring/web"
+import { IUser } from "@/types"
+import { loadStripe } from "@stripe/stripe-js"
 import { useAtomValue, useSetAtom } from "jotai"
-import { ChevronRightIcon } from "lucide-react"
-import React from "react"
+import { LoaderIcon } from "lucide-react"
+import { useRouter } from "next/navigation"
+import React from "react";
 
 
-const OrderList = () => {
-  const orders = useAtomValue(orderListOrdersAtom)
-  const setOrders = useSetAtom(orderListOrdersAtom)
-
-  const total = orders.reduce((acc, item) => acc + (item.product.price - (item.product.price * item.product.discount) / 100) * item.quantity, 0)
-
-  const transitions = useTransition(orders, {
-    from: { opacity: 0, height: 0 },
-    enter: { opacity: 1, height: 80 },
-    leave: { opacity: 0, height: 0 },
-    delay: 50
-  })
-
+const OrderList = ({ user }: { user: IUser }) => {
+  const items = useAtomValue(orderListOrdersAtom)
+  const setItems = useSetAtom(orderListOrdersAtom)
+  const [isLoading, setIsLoading] = React.useState(false)
+  const total = items.reduce((acc, item) => acc + (item.product.price - (item.product.price * item.product.discount) / 100) * item.quantity, 0)
+  const { push } = useRouter()
   const addProduct: TChngQualityProduct = (item) => {
-    setOrders((prev) =>
+    setItems((prev) =>
       prev.map((order) =>
         order.id === item.id
           ? {
@@ -38,9 +35,9 @@ const OrderList = () => {
 
   const removeProduct: TChngQualityProduct = (item) => {
     if (item.quantity === 1) {
-      setOrders((prev) => prev.filter((order) => order.id !== item.id))
+      setItems((prev) => prev.filter((order) => order.id !== item.id))
     } else {
-      setOrders((prev) =>
+      setItems((prev) =>
         prev.map((order) =>
           order.id === item.id
             ? {
@@ -52,31 +49,44 @@ const OrderList = () => {
       )
     }
   }
+  const onPayOrder = async () => {
+    if (user.id) {
+      setIsLoading(true)
+      const data = JSON.parse(await checkout(user.email, items, location.origin + location.pathname))
+      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+      const res = await stripe?.redirectToCheckout({
+        sessionId: data.id
+      })
+      if (res?.error) {
+        alert("Fail to checkout")
+      }
+      setIsLoading(false)
+    } else {
+      push("/auth")
+    }
+  }
 
   return (
     <div className="flex flex-col w-full">
-      <Heading text={"Order Menu"}>
-        <span className="flex cursor-pointer items-center gap-2 text-red-600">
-          <span className="hover:underline underline-offset-2">View all</span>
-          <ChevronRightIcon className=" transition-transform hover:scale-150" size={16} />
-        </span>
-      </Heading>
-      <div>
-        {orders.length ? (
-          transitions((style, item) => (
-            <a.div style={style}>
-              <OrderItem item={item} addProduct={addProduct} removeProduct={removeProduct} key={item.id} />
-            </a.div>
-          ))
+      <Heading text={"Order Menu"} className={"text-base"} />
+      <div className={"max-h-[320px] overflow-y-auto"}>
+        {items.length ? (
+          items.map((item) => <OrderItem item={item} addProduct={addProduct} removeProduct={removeProduct} key={item.id} />)
         ) : (
           <div className="flex w-full font-medium justify-center">Orders not found!</div>
         )}
       </div>
-      {orders.length > 0 && (
-        <div className={"w-full flex justify-between items-end"}>
-          <h5>Total Amount: </h5>
-          <h3 className={"text-xl font-medium underline underline-offset-2"}> {convertCurrency(total)}</h3>
-        </div>
+      {items.length > 0 && (
+        <>
+          <div className={"w-full text-sm flex justify-between items-end"}>
+            <h5>Total Amount: </h5>
+            <h3 className={"text-lg font-medium underline underline-offset-2"}> {convertCurrency(total)}</h3>
+          </div>
+          <Button onClick={onPayOrder} className={"mt-5"}>
+            {isLoading && <LoaderIcon size={16} className={"animate-spin mr-1"} />}
+            Pay
+          </Button>
+        </>
       )}
     </div>
   )
