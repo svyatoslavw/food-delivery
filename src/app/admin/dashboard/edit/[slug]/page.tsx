@@ -1,7 +1,7 @@
 import { EditPage } from "@/app/admin/dashboard/edit/[slug]/components/EditPage"
+import { CategoryService } from "@/lib/api/category.service"
 import { ProductService } from "@/lib/api/product.service"
 import type { Metadata } from "next"
-
 
 type TypeParamProductSlug = {
   slug?: string
@@ -35,7 +35,12 @@ async function getProduct(params: TypeParamProductSlug) {
   return await ProductService.getBySlug(params?.slug as string)
 }
 
+async function getCategories() {
+  return await CategoryService.getAll()
+}
+
 export default async function EditProduct({ params }: IPageProductSlug) {
   const product = await getProduct(params)
-  return <EditPage product={product} />
+  const categories = await getCategories()
+  return <EditPage product={product} categories={categories} />
 }

@@ -2,13 +2,19 @@
 
 import { EditProductCard } from "./EditProductCard"
 import { EditForm } from "@/app/admin/dashboard/edit/[slug]/components/EditForm"
-import { IProduct } from "@/types"
+import type { ICategory, IProduct } from "@/types"
 
-const EditPage = ({ product }: { product: IProduct }) => {
+
+interface IEditPage {
+  categories: ICategory[]
+  product: IProduct
+}
+
+const EditPage = ({ product, categories }: IEditPage) => {
   return (
-    <section className="flex flex-col w-full h-screen gap-6 justify-center items-center">
+    <section className="flex flex-col w-full gap-6 justify-center items-center">
       <EditProductCard product={product} />
-      <EditForm />
+      <EditForm product={product} categories={categories} />
     </section>
   )
 }

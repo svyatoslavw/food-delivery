@@ -1,11 +1,10 @@
 import { SidebarItem } from "@/components/layout/sidebar/SidebarItem"
 import { PUBLIC_URL } from "@/lib/config/url.config"
 import type { ISideLink } from "@/types"
-import { BeefIcon, MapPinnedIcon, PackageCheckIcon, SandwichIcon, SettingsIcon, StarIcon } from "lucide-react"
+import { BeefIcon, IterationCcwIcon, MapPinnedIcon, PackageCheckIcon, SandwichIcon, SettingsIcon, StarIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useMemo } from "react"
-
 
 const DEFAULT_CATEGORY = "?category=97bca986-60a5-4df7-a1dd-d2435442efbf&page=1"
 
@@ -53,19 +52,13 @@ const Sidebar = ({ isAdmin = false }: { isAdmin: boolean }) => {
         label: "Dashboard",
         href: "/admin/dashboard",
         Icon: MapPinnedIcon,
-        isActive: pathname === "/admin/dashboard"
+        isActive: pathname === "/admin/dashboard" || pathname.startsWith("/admin/dashboard/edit")
       },
       {
-        label: "Home",
+        label: "Return to the site",
         href: "/",
-        Icon: BeefIcon,
+        Icon: IterationCcwIcon,
         isActive: pathname === "/"
-      },
-      {
-        label: "Menu",
-        href: "/menu" + DEFAULT_CATEGORY,
-        Icon: SandwichIcon,
-        isActive: pathname === "/menu" || pathname.startsWith("/product")
       }
     ],
     [pathname]
@@ -74,7 +67,8 @@ const Sidebar = ({ isAdmin = false }: { isAdmin: boolean }) => {
   return (
     <div className="flex h-svh w-64 flex-col items-center py-10 ">
       <Link href={PUBLIC_URL.home()} className="text-shadow mb-10 text-2xl font-bold drop-shadow-lg cursor-pointer">
-        GoMeal<span className="text-pink-500 drop-shadow-lg">.</span>
+        <span>{isAdmin ? "Dashboard" : "GoMeal"}</span>
+        <span className="text-pink-500 drop-shadow-lg">.</span>
       </Link>
       <div className="flex flex-col gap-3">
         {isAdmin

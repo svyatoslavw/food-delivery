@@ -12,7 +12,7 @@ const ProductSlugItem = ({ product }: { product: IProduct }) => {
   const image = useLoadImage(product)
 
   return (
-    <div className={"flex mx-auto h-auto w-[1100px] justify-start items-start gap-6 rounded-xl p-2 text-neutral-500 dark:text-neutral-300"}>
+    <section className={"flex mx-auto h-auto w-[1100px] justify-start items-start gap-6 rounded-xl p-2 text-neutral-500 dark:text-neutral-300"}>
       <div className="w-full flex flex-col gap-4">
         <Image
           draggable={false}
@@ -28,7 +28,7 @@ const ProductSlugItem = ({ product }: { product: IProduct }) => {
         <ProductInformation product={product} />
         <CreateProductReview />
       </div>
-    </div>
+    </section>
   )
 }
 

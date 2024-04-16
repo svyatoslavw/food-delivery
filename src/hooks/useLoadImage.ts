@@ -1,18 +1,25 @@
 import { createClient } from "@/lib/supabase/client"
-import type { IProduct } from "@/types"
+import type { ICategory, IProduct } from "@/types"
 
 
-const useLoadImage = (product: IProduct) => {
+const useLoadImage = (item: IProduct | ICategory) => {
   const supabase = createClient()
 
-  if (!product) {
+  if (!item) {
     return null
   }
 
-  const {
-    data: { publicUrl }
-  } = supabase.storage.from("images").getPublicUrl(product.image_url)
-  return publicUrl
+  if ((item as IProduct).price !== undefined) {
+    const {
+      data: { publicUrl }
+    } = supabase.storage.from("images").getPublicUrl(item.image_url)
+    return publicUrl
+  } else {
+    const {
+      data: { publicUrl }
+    } = supabase.storage.from("categories").getPublicUrl(item.image_url)
+    return publicUrl
+  }
 }
 
 export { useLoadImage }

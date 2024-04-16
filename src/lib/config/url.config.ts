@@ -13,5 +13,6 @@ export const PUBLIC_URL = {
 
 export const ADMIN_URL = {
   root: (url = "") => `/admin${url ? "/" + url : ""}`,
-  dashboard: () => ADMIN_URL.root("dashboard")
+  dashboard: () => ADMIN_URL.root("dashboard"),
+  edit: (url = "") => `/admin/dashboard/edit${url ? "/" + url : ""}`
 }

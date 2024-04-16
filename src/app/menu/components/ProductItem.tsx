@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useLoadImage } from "@/hooks/useLoadImage"
 import { PUBLIC_URL } from "@/lib/config/url.config"
 import { cn, convertCurrency } from "@/lib/utils"
-import { TAddToCard, ordersAtom } from "@/store"
+import { ordersAtom, TAddToCard } from "@/store"
 import type { IProduct, IUser } from "@/types"
 import { useSetAtom } from "jotai/index"
 import { HeartIcon, PlusIcon } from "lucide-react"
@@ -12,6 +12,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+
 
 interface IPopularItem {
   product: IProduct

@@ -1,30 +1,33 @@
 "use client"
 
-import { useEditForm } from "@/app/admin/dashboard/edit/[slug]/hooks/useEditForm"
+import { useAddProductForm } from "@/app/admin/dashboard/hooks/useAddProductForm"
 import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import type { ICategory, IProduct } from "@/types"
+import { ICategory } from "@/types"
 import { LoaderIcon } from "lucide-react"
+import React from "react"
 
-interface IEditForm {
-  categories: ICategory[]
-  product: IProduct
-}
-
-const EditForm = ({ product, categories }: IEditForm) => {
-  const { form, state, functions } = useEditForm(product)
+const AddNewProduct = ({ categories }: { categories: ICategory[] }) => {
+  const { form, state, functions } = useAddProductForm()
   return (
-    <Form {...form}>
-      <form
-        onSubmit={functions.onSubmit}
-        className={"space-y-2 w-[900px] py-2 px-4 bg-secondary/30 flex flex-col text-neutral-500 dark:text-neutral-300 text-xs"}
-      >
-        <h1 className={"text-3xl font-semibold"}>Edit Product</h1>
-        <section className="flex gap-5">
-          <div className="w-1/2 flex flex-col gap-2">
+    <Dialog open={state.open} onOpenChange={functions.setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline">Add New Product</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Create Product</DialogTitle>
+          <DialogDescription>Add a new product here.</DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form
+            onSubmit={functions.onSubmit}
+            className={"space-y-2 w-full py-2 px-4 bg-secondary/30 flex flex-col text-neutral-500 dark:text-neutral-300 text-xs"}
+          >
             <FormField
               control={form.control}
               name="title"
@@ -71,7 +74,7 @@ const EditForm = ({ product, categories }: IEditForm) => {
                 <FormItem>
                   <FormLabel>Category</FormLabel>
                   <FormControl>
-                    <Select disabled={state.isLoading} onValueChange={field.onChange} defaultValue={product.category_id}>
+                    <Select disabled={state.isLoading} onValueChange={field.onChange}>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select a Category" />
                       </SelectTrigger>
@@ -91,8 +94,6 @@ const EditForm = ({ product, categories }: IEditForm) => {
                 </FormItem>
               )}
             />
-          </div>
-          <div className="w-1/2 flex flex-col gap-2">
             <FormField
               control={form.control}
               name="description"
@@ -101,7 +102,7 @@ const EditForm = ({ product, categories }: IEditForm) => {
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea
-                      className="min-h-[134px]"
+                      className="min-h-[134px] resize-none text-xs"
                       disabled={state.isLoading}
                       placeholder="Description..."
                       {...field}
@@ -137,13 +138,12 @@ const EditForm = ({ product, categories }: IEditForm) => {
             />
             <Button className={"w-full"} type="submit">
               {state.isLoading && <LoaderIcon size={14} className={"animate-spin mr-1"} />}
-              Save Changes
+              Create Product
             </Button>
-          </div>
-        </section>
-      </form>
-    </Form>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   )
 }
-
-export { EditForm }
+export { AddNewProduct }

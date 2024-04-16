@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Rating } from "react-simple-star-rating"
 
+
 const PopularItem = ({ product }: { product: IProduct }) => {
   const image = useLoadImage(product)
 

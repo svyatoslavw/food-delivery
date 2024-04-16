@@ -19,7 +19,7 @@ const ProductInformation = ({ product }: { product: IProduct }) => {
         allowFraction
         transition
       />
-      <div className={"w-full mb-6"}>{product.description}</div>
+      <div className={"w-full mb-5"}>{product.description}</div>
     </>
   )
 }

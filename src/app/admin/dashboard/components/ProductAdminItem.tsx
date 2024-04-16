@@ -7,6 +7,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Rating } from "react-simple-star-rating"
 
+
 const ProductAdminItem = ({ product }: { product: IProduct }) => {
   const image = useLoadImage(product)
 
@@ -17,7 +18,7 @@ const ProductAdminItem = ({ product }: { product: IProduct }) => {
       }
     >
       <Link href={`/admin/dashboard/edit/${product.slug}`}>
-        <SettingsIcon className={"absolute top-2 right-2 opacity-50 transition hover:animate-spin hover:opacity-100"} />
+        <SettingsIcon size={18} className={"absolute top-2 right-2 opacity-50 transition hover:animate-spin hover:opacity-100"} />
       </Link>
       <div className={"flex"}>
         <Link href={PUBLIC_URL.product(product.slug)} className={"object-cover aspect-square flex"}>

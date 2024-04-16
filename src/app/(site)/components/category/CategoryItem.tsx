@@ -2,6 +2,7 @@
 
 import { useFilter } from "@/app/menu/hooks/useFilter"
 import { Button } from "@/components/ui/button"
+import { useLoadImage } from "@/hooks/useLoadImage"
 import { cn } from "@/lib/utils"
 import { ICategory } from "@/types"
 import Image from "next/image"
@@ -9,6 +10,7 @@ import Image from "next/image"
 
 const CategoryItem = ({ item, isMain }: { item: ICategory; isMain: boolean }) => {
   const { queryParams, updateQueryParams } = useFilter(isMain)
+  const image = useLoadImage(item)
   return (
     <Button
       onClick={() => updateQueryParams({ category: item.id, page: 1 })}
@@ -19,7 +21,7 @@ const CategoryItem = ({ item, isMain }: { item: ICategory; isMain: boolean }) =>
         }
       )}
     >
-      <Image draggable={false} src={item.image_url || "/menu.png"} width={40} height={40} alt={item.id} />
+      <Image draggable={false} src={image ?? "/menu.png"} width={40} height={40} alt={item.id} />
       <span>{item.title}</span>
     </Button>
   )

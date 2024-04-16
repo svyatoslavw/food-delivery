@@ -10,34 +10,32 @@ const EditProductCard = ({ product }: { product: IProduct }) => {
   return (
     <div
       className={
-        "flex bg-secondary dark:bg-secondary/30 mx-auto h-auto w-[900px] justify-center items-center gap-6 rounded-xl p-2 text-neutral-500 dark:text-neutral-300"
+        "flex bg-secondary dark:bg-secondary/30 mx-auto h-auto w-full justify-center items-center gap-6 rounded-xl p-2 text-neutral-500 dark:text-neutral-300"
       }
     >
       <Image
         draggable={false}
         src={image ?? "/burger_default.png"}
         alt={product.title}
-        width={350}
-        height={350}
-        className={"object-cover aspect-square p-3 bg-secondary/10 rounded-2xl"}
+        width={300}
+        height={300}
+        className={"object-cover flex aspect-square p-3 bg-secondary/10 rounded-2xl"}
       />
-      <div className={"py-10 flex flex-col w-full gap-2"}>
-        <>
-          <div className={"text-5xl font-semibold"}>{product.title}</div>
-          <div className={"text-2xl"}>{convertCurrency(product.price)}</div>
-          <Rating
-            readonly
-            initialValue={2}
-            SVGstyle={{
-              display: "inline-block"
-            }}
-            fillColor="gray"
-            size={24}
-            allowFraction
-            transition
-          />
-          <div className={"w-full mb-6"}>{product.description}</div>
-        </>
+      <div className={"w-[450px] flex flex-col gap-1"}>
+        <div className={"text-4xl font-semibold"}>{product.title}</div>
+        <div className={"text-xl"}>{convertCurrency(product.price)}</div>
+        <Rating
+          readonly
+          initialValue={2}
+          SVGstyle={{
+            display: "inline-block"
+          }}
+          fillColor="gray"
+          size={20}
+          allowFraction
+          transition
+        />
+        <div className={"text-sm"}>{product.description}</div>
       </div>
     </div>
   )
