@@ -29,16 +29,15 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
   return JSON.stringify(res)
 }
 
-export async function loginWithOAuth(next: string, provider: "github" | "google") {
+export async function loginWithOAuth(provider: "github" | "google") {
   const supabase = createServerClient()
 
-  const res = await supabase.auth.signInWithOAuth({
+  await supabase.auth.signInWithOAuth({
     provider,
-    options: { redirectTo: "/auth/callback?next=" + next }
+    options: {
+      redirectTo: `${window.location.origin}/auth/confirm`
+    }
   })
-
-  revalidatePath("/", "layout")
-  return JSON.stringify(res)
 }
 
 export async function logout() {

@@ -1,9 +1,7 @@
 "use client"
 
-import { loginWithOAuth } from "../actions"
-import { useSearchParams } from "next/navigation"
+import { createClient } from "@/lib/supabase/client"
 import React from "react"
-
 
 interface AuthButtonProps extends React.ButtonHTMLAttributes<HTMLAnchorElement> {
   text: string
@@ -12,13 +10,21 @@ interface AuthButtonProps extends React.ButtonHTMLAttributes<HTMLAnchorElement> 
 
 // eslint-disable-next-line react/display-name
 const OAuthButton = React.forwardRef<HTMLButtonElement, AuthButtonProps>(({ children, text, provider }, ref) => {
-  const params = useSearchParams()
-  const next = params.get("next") || ""
+  const loginWithOAuth = () => {
+    const supabase = createClient()
+
+    supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: `${location.origin}/auth/confirm`
+      }
+    })
+  }
 
   return (
     <button
       type="button"
-      onClick={() => loginWithOAuth(next, provider)}
+      onClick={loginWithOAuth}
       ref={ref}
       className="flex w-full items-center justify-center gap-3 rounded-lg border bg-background hover:border-primary px-3 py-2 font-medium text-foreground transition-colors dark:bg-background dark:text-foreground"
     >

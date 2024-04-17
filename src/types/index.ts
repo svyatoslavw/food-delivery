@@ -68,16 +68,22 @@ export type TQueryParams = {
   minPrice?: string
   maxPrice?: string
   category: string
-  isFilterUpdated: boolean
+}
+
+export interface IStripeProduct {
+  price: number
+  title: string
+  price_id: string
+  quantity: number
 }
 
 export interface IOrder {
   id: number
-  createdAt: string
+  created_at: string
   total: number
-  items: ICartItem[]
+  products: IStripeProduct[]
   status: EnumOrderStatus
-  user: IUser
+  user_id: string
 }
 
 export type TPricingPlanInterval = "day" | "week" | "month" | "year"

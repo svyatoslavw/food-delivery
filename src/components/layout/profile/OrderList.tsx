@@ -52,7 +52,7 @@ const OrderList = ({ user }: { user: IUser }) => {
   const onPayOrder = async () => {
     if (user.id) {
       setIsLoading(true)
-      const data = JSON.parse(await checkout(user.email, items, location.origin + location.pathname))
+      const data = JSON.parse(await checkout(user.email, items))
       const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
       const res = await stripe?.redirectToCheckout({
         sessionId: data.id

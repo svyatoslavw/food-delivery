@@ -61,11 +61,16 @@ const config = {
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" }
+        },
+        shine: {
+          from: { backgroundColor: "#dc2626" },
+          to: { backgroundColor: "#fca5a5" }
         }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out"
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "shine": "shine 1s infinite alternate"
       },
       backgroundImage: {
         "gradient-custom": "linear-gradient(to bottom right, #f87171, #db2777)"

@@ -4,7 +4,6 @@ import { ICategory } from "@/types"
 import { SquarePenIcon } from "lucide-react"
 import Image from "next/image"
 
-
 const CategoryAdminItem = ({ item }: { item: ICategory }) => {
   const image = useLoadImage(item)
   return (
@@ -14,7 +13,7 @@ const CategoryAdminItem = ({ item }: { item: ICategory }) => {
       }
     >
       <SquarePenIcon size={16} className={"absolute right-2 top-2 cursor-pointer opacity-50 transition hover:opacity-100"} />
-      <Image draggable={false} src={image || "/menu.png"} width={40} height={40} alt="22" />
+      <Image priority draggable={false} src={image || "/menu.png"} width={40} height={40} alt="22" />
       <span>{item.title}</span>
     </Button>
   )

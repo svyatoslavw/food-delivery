@@ -1,7 +1,7 @@
 import { SidebarItem } from "@/components/layout/sidebar/SidebarItem"
 import { PUBLIC_URL } from "@/lib/config/url.config"
 import type { ISideLink } from "@/types"
-import { BeefIcon, IterationCcwIcon, MapPinnedIcon, PackageCheckIcon, SandwichIcon, SettingsIcon, StarIcon } from "lucide-react"
+import { BeefIcon, IterationCcwIcon, MapPinnedIcon, PackageCheckIcon, SandwichIcon, StarIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useMemo } from "react"
@@ -35,12 +35,6 @@ const Sidebar = ({ isAdmin = false }: { isAdmin: boolean }) => {
         href: "/favorite",
         Icon: StarIcon,
         isActive: pathname === "/favorite"
-      },
-      {
-        label: "Settings",
-        href: "/settings",
-        Icon: SettingsIcon,
-        isActive: pathname === "/settings"
       }
     ],
     [pathname]

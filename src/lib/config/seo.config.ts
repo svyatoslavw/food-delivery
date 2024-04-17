@@ -1,4 +1,4 @@
-export const SITE_NAME = "GoMeal"
+export const SITE_NAME = "Food Delivery"
 
 export const SITE_URL = process.env.APP_URL as string
 

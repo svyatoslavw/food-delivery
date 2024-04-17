@@ -3,6 +3,9 @@ import { headers } from "next/headers"
 import { buffer } from "node:stream/consumers"
 import Stripe from "stripe"
 
+interface User {
+  id: string
+}
 
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET!
 
@@ -19,57 +22,53 @@ export async function POST(req: any) {
       return Response.json({ error: `Webhook Error ${err?.message!} ` })
     }
     switch (event.type) {
-      case "invoice.payment_succeeded":
-        // // update here
-        // const result = event.data.object
-        // const end_at = new Date(result.lines.data[0].period.end * 1000).toISOString()
-        // const customer_id = result.customer as string
-        // const subscription_id = result.subscription as string
-        // const email = result.customer_email as string
-        // const error = await onPaymentSucceeded(end_at, customer_id, subscription_id, email)
-        // if (error) {
-        //   console.log(error)
-        //   return Response.json({ error: error.message })
-        // }
+      case "payment_intent.succeeded":
+        console.log("@payment_intent.succeeded", event.data.object)
         break
-      case "customer.subscription.deleted":
-        // const deleteSubscription = event.data.object
-        // const cancelError = await onSubCancel(deleteSubscription.id)
-        // if (cancelError) {
-        //   console.log(cancelError)
-        //   return Response.json({ error: cancelError.message })
-        // }
+      case "checkout.session.completed":
+        const session = await stripe.checkout.sessions.retrieve(event.data.object.id, {
+          expand: ["line_items"]
+        })
+        await onPaymentSucceeded(event.data.object.customer_email as string, session)
         break
       default:
         console.log(`Unhandled event type ${event.type}`)
     }
     return Response.json({})
   } catch (e) {
-    return Response.json({ error: `Webhook Error}` })
+    return Response.json({ error: `Webhook Error` })
   }
 }
 
-async function onPaymentSucceeded(end_at: string, customer_id: string, subscription_id: string, email: string) {
-  const supabase = await supabaseAdmin()
-  const { error } = await supabase
-    .from("subscription")
-    .update({
-      end_at,
-      customer_id,
-      subscription_id
-    })
-    .eq("email", email)
-  return error
-}
+async function onPaymentSucceeded(email: string, session: Stripe.Response<Stripe.Checkout.Session>) {
+  if (!session || !session.line_items || !session.line_items.data) {
+    return Response.json({ error: "Session not found!" })
+  }
 
-async function onSubCancel(subscription_id: string) {
   const supabase = await supabaseAdmin()
-  const { error } = await supabase
-    .from("subscription")
-    .update({
-      customer_id: null,
-      subscription_id: null
-    })
-    .eq("subscription_id", subscription_id)
-  return error
+  const { data: user, error: userError } = await supabase.from("user").select("id").eq("email", email).single()
+  if (userError) {
+    return Response.json({ error: userError.message })
+  }
+  const total = session.line_items.data.reduce((acc, item) => acc + item.amount_total, 0)
+
+  const products = session.line_items.data.map((line: Stripe.LineItem) => {
+    return {
+      title: line.description,
+      price: (line.amount_total / 100).toFixed(2),
+      quantity: line.quantity,
+      price_id: line.price?.id
+    }
+  })
+
+  const { error: orderError } = await supabase.from("order").insert({
+    user_id: user.id,
+    products,
+    total: (total / 100).toFixed(2),
+    status: "PENDING"
+  })
+
+  if (orderError) {
+    return Response.json({ error: orderError.message })
+  }
 }

@@ -4,14 +4,13 @@ import { ProductService } from "@/lib/api/product.service"
 import { CREATOR, GITHUB_URL, SITE_KEYWORDS, SITE_NAME, SITE_URL } from "@/lib/config/seo.config"
 import { Metadata } from "next"
 
-
 export const metadata: Metadata = {
   icons: {
-    icon: "icon.ico",
-    shortcut: "icon.ico"
+    icon: "icon.png",
+    shortcut: "icon.png"
   },
   title: {
-    absolute: `${SITE_NAME} - Food Delivery`,
+    absolute: `Home - ${SITE_NAME}`,
     template: `%s | ${SITE_NAME}`
   },
   openGraph: {

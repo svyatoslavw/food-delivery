@@ -5,7 +5,6 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { UserService } from "@/lib/api/user.service"
 import { CircleUserIcon, ContactIcon } from "lucide-react"
 
-
 const Profile = async () => {
   const user = await UserService.getProfile("server")
 
@@ -23,7 +22,7 @@ const Profile = async () => {
           <SheetTitle>Your Profile</SheetTitle>
           <SheetDescription className="flex items-center gap-2 border rounded-lg bg-secondary dark:bg-secondary/30 py-2 px-4">
             <CircleUserIcon size={40} />
-            <span className={"flex justify-between w-full items-center"}>
+            <span className={"flex flex-col w-full items-start"}>
               <span className="font-medium">{user.email}</span>
               <span className={"text-xs"}>{user.role}</span>
             </span>

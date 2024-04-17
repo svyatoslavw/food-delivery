@@ -4,14 +4,13 @@ import { ProductService } from "@/lib/api/product.service"
 import { CREATOR, GITHUB_URL, SITE_KEYWORDS, SITE_NAME, SITE_URL } from "@/lib/config/seo.config"
 import { Metadata } from "next"
 
-
 export const metadata: Metadata = {
   icons: {
-    icon: "icon.ico",
-    shortcut: "icon.ico"
+    icon: "icon.png",
+    shortcut: "icon.png"
   },
   title: {
-    absolute: "Menu - Food Delivery",
+    absolute: `Menu - ${SITE_NAME}`,
     template: `%s | ${SITE_NAME}`
   },
   openGraph: {
@@ -29,9 +28,6 @@ export const metadata: Metadata = {
   keywords: SITE_KEYWORDS
 }
 export default async function Menu({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
-  const page = searchParams["page"] ?? "1"
-  const per_page = searchParams["per_page"] ?? "5"
-
   const categories = await CategoryService.getAll()
   const initialProducts = await ProductService.getByCategory(searchParams)
   const count = await ProductService.getCountCategoryProducts(searchParams)

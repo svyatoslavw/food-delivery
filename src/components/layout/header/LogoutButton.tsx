@@ -1,14 +1,11 @@
 "use client"
 
 import { logout } from "@/app/auth/actions"
-import { useQueryClient } from "@tanstack/react-query"
 import { LogOutIcon } from "lucide-react"
 
 const LogoutButton = () => {
-  const queryClient = useQueryClient()
   const handler = () => {
     logout()
-    queryClient.clear()
   }
 
   return (

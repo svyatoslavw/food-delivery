@@ -1,13 +1,14 @@
+import { OrdersPage } from "./components/OrdersPage"
+import { OrderService } from "@/lib/api/order.service"
 import { CREATOR, GITHUB_URL, SITE_KEYWORDS, SITE_NAME, SITE_URL } from "@/lib/config/seo.config"
 import { createServerClient } from "@/lib/supabase/server"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
-
 export const metadata: Metadata = {
   icons: {
-    icon: "icon.ico",
-    shortcut: "icon.ico"
+    icon: "icon.png",
+    shortcut: "icon.png"
   },
   title: {
     absolute: `My orders - ${SITE_NAME}`,
@@ -36,5 +37,11 @@ export default async function Orders() {
     redirect("/")
   }
 
-  return <div>Orders {data.user.email}</div>
+  const orders = await OrderService.getAll(data.user.id)
+
+  return (
+    <div>
+      <OrdersPage orders={orders} />
+    </div>
+  )
 }
