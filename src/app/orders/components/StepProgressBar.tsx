@@ -4,14 +4,14 @@ import { DollarSignIcon, LoaderIcon, PackageCheckIcon, TruckIcon } from "lucide-
 
 const MARGIN = 10
 
-const StepProgressBar = ({ orderStatus }: { orderStatus: EnumOrderStatus }) => {
+const StepProgressBar = ({ status }: { status: EnumOrderStatus }) => {
   let stepPercentage = 0
   let first = false
   let second = false
   let third = false
   let fourth = false
 
-  switch (orderStatus) {
+  switch (status) {
     case EnumOrderStatus.PENDING:
       stepPercentage = 0 + MARGIN
       first = true
@@ -38,39 +38,39 @@ const StepProgressBar = ({ orderStatus }: { orderStatus: EnumOrderStatus }) => {
       stepPercentage = 0
   }
   return (
-    <div className="flex h-[2px] w-[30%] leading-none rounded relative bg-neutral-300 justify-between items-center z-0 my-5">
+    <div className="flex h-[2px] w-full leading-none rounded relative bg-neutral-300 justify-between items-center z-0 my-8">
       <div className="h-[2px] animate-shine bg-red-500 absolute left-0 bottom-0 transition-all" style={{ width: `${stepPercentage}%` }}></div>
       <div
         className={cn(
-          "flex justify-center items-center z-10 text-gray-500 dark:text-gray-200 w-10 h-10 text-xs bg-white dark:bg-black rounded-full border-2 border-gray-100 cursor-pointer",
+          "flex justify-center items-center z-10 text-gray-500 dark:text-gray-200 p-2 text-xs bg-white dark:bg-black rounded-full border-2 border-red-400 cursor-pointer",
           { ["bg-red-500 dark:bg-red-500 text-background z-10 border-none"]: first }
         )}
       >
-        <LoaderIcon />
+        <LoaderIcon size={18} />
       </div>
       <div
         className={cn(
-          "flex justify-center items-center z-10 text-gray-500 dark:text-gray-200 w-10 h-10 text-xs bg-white dark:bg-black rounded-full border-2 border-gray-100 cursor-pointer",
+          "flex justify-center items-center z-10 text-gray-500 dark:text-gray-200 p-2 text-xs bg-white dark:bg-black rounded-full border-2 border-red-400 cursor-pointer",
           { ["bg-red-500 dark:bg-red-500 text-background z-10 border-none"]: second }
         )}
       >
-        <DollarSignIcon />
+        <DollarSignIcon size={18} />
       </div>
       <div
         className={cn(
-          "flex justify-center items-center z-10 text-gray-500 dark:text-gray-200 w-10 h-10 text-xs bg-white dark:bg-black rounded-full border-2 border-gray-100 cursor-pointer",
+          "flex justify-center items-center z-10 text-gray-500 dark:text-gray-200 p-2 text-xs bg-white dark:bg-black rounded-full border-2 border-red-400 cursor-pointer",
           { ["bg-red-500 dark:bg-red-500 text-background z-10 border-none"]: third }
         )}
       >
-        <TruckIcon />
+        <TruckIcon size={18} />
       </div>
       <div
         className={cn(
-          "flex justify-center items-center z-10 text-gray-500 dark:text-gray-200 w-10 h-10 text-xs bg-white dark:bg-black rounded-full border-2 border-red-400 cursor-pointer",
+          "flex justify-center items-center z-10 text-gray-500 dark:text-gray-200 p-2 text-xs bg-white dark:bg-black rounded-full border-2 border-red-400 cursor-pointer",
           { ["bg-red-500 dark:bg-red-500 text-background z-10 border-none"]: fourth }
         )}
       >
-        <PackageCheckIcon />
+        <PackageCheckIcon size={18} />
       </div>
     </div>
   )

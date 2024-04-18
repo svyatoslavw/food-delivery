@@ -1,10 +1,9 @@
 "use client"
 
 import { useFilter } from "../hooks/useFilter"
-import Pagination from "./Pagination"
+import { Pagination } from "./Pagination"
 import { ProductItem } from "./ProductItem"
 import type { IProduct, IUser } from "@/types"
-
 
 interface IProductList {
   initialProducts: IProduct[]
@@ -16,12 +15,12 @@ const ProductList = ({ initialProducts, count, user }: IProductList) => {
   const { queryParams, updateQueryParams } = useFilter()
 
   return (
-    <article>
-      <div className="grid grid-cols-4 gap-4">
-        {initialProducts?.length ? (
+    <main>
+      <div className="grid grid-cols-5 gap-4">
+        {initialProducts.length ? (
           initialProducts.map((product) => <ProductItem product={product} user={user} key={product.id} />)
         ) : (
-          <div className="grid w-full text-xl col-span-full my-4 font-medium justify-center">Products not found!</div>
+          <div className="grid w-full h-16 place-items-center border text-xl col-span-full my-4 font-medium justify-center">Products not found!</div>
         )}
       </div>
       {initialProducts.length > 0 && (
@@ -31,7 +30,7 @@ const ProductList = ({ initialProducts, count, user }: IProductList) => {
           numberPages={Math.ceil(count / +queryParams.perPage!)}
         />
       )}
-    </article>
+    </main>
   )
 }
 

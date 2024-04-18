@@ -1,7 +1,6 @@
 import { OAuthButton } from "./OAuthButton"
 import { useRegisterForm } from "@/app/auth/hooks/useRegisterForm"
 import { GithubIcon } from "@/components/icons/github"
-import { GoogleIcon } from "@/components/icons/google"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -9,7 +8,6 @@ import { PasswordInput } from "@/components/ui/password-input"
 import { cn } from "@/lib/utils"
 import { LoaderIcon } from "lucide-react"
 import * as z from "zod"
-
 
 export const RegisterSchema = z
   .object({
@@ -77,9 +75,6 @@ const RegisterForm = () => {
           {state.isLoading && <LoaderIcon size={14} className={cn("animate-spin")} />}
           Register
         </Button>
-        <OAuthButton text="google" provider="google">
-          <GoogleIcon />
-        </OAuthButton>
         <OAuthButton text="github" provider="github">
           <GithubIcon />
         </OAuthButton>

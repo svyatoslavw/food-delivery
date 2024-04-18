@@ -80,20 +80,45 @@ export const ProductService = {
   },
   async getByCategory(searchParams: { [key: string]: string | string[] | undefined }) {
     const page = searchParams["page"] ?? "1"
-    const per_page = "4"
+    const per_page = "10"
+    const category = searchParams["category"]
+    const searchTerm = searchParams["searchTerm"] ?? undefined
 
     const supabase = createServerClient()
-    const { data, error } = await supabase
-      .from("product")
-      .select("*")
-      .eq("category_id", searchParams["category"])
+    const query = supabase.from("product").select("*")
+
+    if (category) {
+      query.eq("category_id", category)
+    }
+
+    const { data, error } = await query
       .range((+page - 1) * +per_page, +page * +per_page - 1)
-    if (error) return []
-    return data as IProduct[]
+      .ilike("title", `%${searchTerm ?? ""}%`)
+      .order("discount", { ascending: false })
+
+    if (error) {
+      return []
+    } else {
+      return data as IProduct[]
+    }
   },
   async getCountCategoryProducts(searchParams: { [key: string]: string | string[] | undefined }) {
     const supabase = createServerClient()
-    const { count, error } = await supabase.from("product").select("count", { count: "exact" }).eq("category_id", searchParams["category"])
+
+    const category = searchParams["category"]
+    const searchTerm = searchParams["searchTerm"] ?? undefined
+
+    const query = supabase
+      .from("product")
+      .select("count", { count: "exact" })
+      .ilike("title", `%${searchTerm ?? ""}%`)
+
+    if (category) {
+      query.eq("category_id", category)
+    }
+
+    const { count, error } = await query
+
     if (error) {
       return 0
     } else {

@@ -20,7 +20,7 @@ const EditForm = ({ product, categories }: IEditForm) => {
     <Form {...form}>
       <form
         onSubmit={functions.onSubmit}
-        className={"space-y-2 w-[900px] py-2 px-4 bg-secondary/30 flex flex-col text-neutral-500 dark:text-neutral-300 text-xs"}
+        className={"space-y-2 w-[900px] p-4 bg-secondary/30 flex flex-col text-neutral-500 dark:text-neutral-300 text-xs"}
       >
         <h1 className={"text-3xl font-semibold"}>Edit Product</h1>
         <section className="flex gap-5">

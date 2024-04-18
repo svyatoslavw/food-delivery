@@ -6,8 +6,6 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useMemo } from "react"
 
-const DEFAULT_CATEGORY = "?category=97bca986-60a5-4df7-a1dd-d2435442efbf&page=1"
-
 const Sidebar = ({ isAdmin = false }: { isAdmin: boolean }) => {
   const pathname = usePathname()
   const routes: ISideLink[] = useMemo(
@@ -20,7 +18,7 @@ const Sidebar = ({ isAdmin = false }: { isAdmin: boolean }) => {
       },
       {
         label: "Menu",
-        href: "/menu" + DEFAULT_CATEGORY,
+        href: "/menu",
         Icon: SandwichIcon,
         isActive: pathname === "/menu" || pathname.startsWith("/product")
       },
@@ -64,7 +62,7 @@ const Sidebar = ({ isAdmin = false }: { isAdmin: boolean }) => {
         <span>{isAdmin ? "Dashboard" : "GoMeal"}</span>
         <span className="text-pink-500 drop-shadow-lg">.</span>
       </Link>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col w-full gap-2">
         {isAdmin
           ? routesAdmin.map((route) => <SidebarItem {...route} key={route.href} />)
           : routes.map((route) => <SidebarItem {...route} key={route.href} />)}

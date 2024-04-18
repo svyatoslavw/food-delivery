@@ -5,7 +5,6 @@ import { useSetAtom } from "jotai/index"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import React from "react"
 
-
 export const useFilter = (isMain?: boolean) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -30,6 +29,10 @@ export const useFilter = (isMain?: boolean) => {
     for (const key in values) {
       if (Object.prototype.hasOwnProperty.call(values, key)) {
         const value = values[key as keyof TQueryParams]
+
+        if (values.category === "51afa940-e541-4494-9cc9-e25ad10fac28") {
+          newParams.delete("category")
+        }
         if (value) {
           newParams.set(key, String(value))
         } else {
@@ -47,7 +50,7 @@ export const useFilter = (isMain?: boolean) => {
   const value = React.useMemo(() => ({ queryParams }), [queryParams])
 
   return {
-    queryParams,
+    ...value,
     updateQueryParams
   }
 }

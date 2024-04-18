@@ -1,12 +1,10 @@
 "use client"
 
-import ProductAdminItem from "@/app/admin/dashboard/components/ProductAdminItem"
-import Pagination from "@/app/menu/components/Pagination"
+import { ProductAdminItem } from "@/app/admin/dashboard/components/ProductAdminItem"
+import { Pagination } from "@/app/menu/components/Pagination"
 import { useFilter } from "@/app/menu/hooks/useFilter"
 import { Heading } from "@/components/ui/heading"
 import { IProduct } from "@/types"
-import React from "react"
-
 
 interface IProductAdminList {
   products: IProduct[]

@@ -3,7 +3,6 @@ import { createServerClient } from "@/lib/supabase/server"
 import { LogInIcon } from "lucide-react"
 import Link from "next/link"
 
-
 export default async function RegisterOrLoginButton() {
   const supabase = createServerClient()
   const { data } = await supabase.auth.getUser()
@@ -18,7 +17,7 @@ export default async function RegisterOrLoginButton() {
   return (
     <div
       title={"Login"}
-      className="bg-secondary/50 p-1.5 text-white rounded hover:bg-secondary/30 transition ease-in-out flex items-center justify-center"
+      className="bg-secondary/50 p-1.5 text-white rounded hover:bg-secondary/30 border transition ease-in-out flex items-center justify-center"
     >
       <Link href="/auth">
         <LogInIcon color={"red"} />

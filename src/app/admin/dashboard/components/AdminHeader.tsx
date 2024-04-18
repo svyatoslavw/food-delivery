@@ -1,10 +1,10 @@
 import { AddNewMenu } from "@/app/admin/dashboard/components/AddNewMenu"
 import { AddNewProduct } from "@/app/admin/dashboard/components/AddNewProduct"
+import RegisterOrLoginButton from "@/components/layout/header/RegisterOrLoginButton"
 import { Input } from "@/components/ui/input"
+import { ThemeToggler } from "@/components/ui/theme-toggler"
 import { CategoryService } from "@/lib/api/category.service"
 import { SearchIcon } from "lucide-react"
-import React from "react"
-
 
 const AdminHeader = async () => {
   const categories = await CategoryService.getAll()
@@ -17,6 +17,8 @@ const AdminHeader = async () => {
       <div className="flex gap-2 items-center">
         <AddNewMenu />
         <AddNewProduct categories={categories} />
+        <ThemeToggler />
+        <RegisterOrLoginButton />
       </div>
     </div>
   )

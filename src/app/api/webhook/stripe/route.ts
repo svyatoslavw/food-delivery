@@ -1,11 +1,8 @@
 import { supabaseAdmin } from "@/lib/supabase/admin"
+import { EnumOrderStatus } from "@/types"
 import { headers } from "next/headers"
 import { buffer } from "node:stream/consumers"
 import Stripe from "stripe"
-
-interface User {
-  id: string
-}
 
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET!
 
@@ -65,7 +62,7 @@ async function onPaymentSucceeded(email: string, session: Stripe.Response<Stripe
     user_id: user.id,
     products,
     total: (total / 100).toFixed(2),
-    status: "PENDING"
+    status: EnumOrderStatus.PAYED
   })
 
   if (orderError) {

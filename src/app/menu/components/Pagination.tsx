@@ -16,7 +16,7 @@ const Pagination = ({ numberPages, changePage, currentPage }: IPagination) => {
         return (
           <Button
             variant={currentPage === pageNumber ? "destructive" : "secondary"}
-            className="mx-0.5 p-3 aspect-square text-sm disabled:opacity-100"
+            className="mx-0.5 p-3 h-8 w-8 aspect-square rounded text-sm disabled:opacity-100"
             key={pageNumber}
             onClick={() => changePage(pageNumber)}
             disabled={currentPage === pageNumber}
@@ -29,4 +29,4 @@ const Pagination = ({ numberPages, changePage, currentPage }: IPagination) => {
   )
 }
 
-export default Pagination
+export { Pagination }

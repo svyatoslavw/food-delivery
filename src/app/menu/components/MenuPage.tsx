@@ -4,7 +4,6 @@ import Header from "@/components/layout/header/Header"
 import { UserService } from "@/lib/api/user.service"
 import { ICategory, IProduct } from "@/types"
 
-
 interface IMenuPage {
   categories: ICategory[]
   initialProducts: IProduct[]

@@ -1,9 +1,10 @@
+import { ADMIN_URL } from "../config/url.config"
 import { logout } from "@/app/auth/actions"
 import { createServerClient, type CookieOptions } from "@supabase/ssr"
 import { NextResponse, type NextRequest } from "next/server"
 
 export async function updateSession(request: NextRequest) {
-  const PROTECTED_PATHS = ["/settings", "orders"]
+  const PROTECTED_PATHS = ["/settings", "/orders", "/favorite"]
 
   let response = NextResponse.next({
     request: {
@@ -58,16 +59,25 @@ export async function updateSession(request: NextRequest) {
     error
   } = await supabase.auth.getUser()
 
+  const { data } = await supabase.from("user").select("*").eq("id", user?.id).single()
   if (error?.name === "ConnectTimeoutError") {
     logout()
   }
 
   const url = new URL(request.url)
+  const isAdminPage = request.url.includes(ADMIN_URL.root())
 
   if (user) {
     if (url.pathname === "/auth") {
       return NextResponse.redirect(new URL("/", request.url))
     }
+
+    if (data.role !== "admin") {
+      if (isAdminPage) {
+        return NextResponse.redirect(new URL("/not-found", request.url))
+      }
+    }
+
     return response
   } else {
     if (PROTECTED_PATHS.includes(url.pathname)) {

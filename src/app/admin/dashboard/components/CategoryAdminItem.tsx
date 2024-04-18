@@ -9,7 +9,7 @@ const CategoryAdminItem = ({ item }: { item: ICategory }) => {
   return (
     <Button
       className={
-        "flex h-24 text-xs relative w-full flex-col items-center justify-center border-2 gap-2 rounded-xl cursor-default bg-secondary dark:bg-secondary/50 hover:bg-primary/10 dark:hover:bg-primary/10 p-2 text-neutral-500 dark:text-neutral-300 transition-all"
+        "flex h-24 text-xs relative w-full flex-col items-center border justify-center gap-2 rounded-none cursor-default bg-secondary dark:bg-secondary/50 hover:bg-primary/5 dark:hover:bg-primary/10 p-2 text-neutral-500 dark:text-neutral-300 transition-all"
       }
     >
       <SquarePenIcon size={16} className={"absolute right-2 top-2 cursor-pointer opacity-50 transition hover:opacity-100"} />
