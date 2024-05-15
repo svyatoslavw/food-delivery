@@ -1,10 +1,10 @@
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" alt="logo" width="100" height="100" />
 
-   <h1>PC Builder</h1>
+   <h1>Food Delivery</h1>
   
   <p>
-  (Next.js, @redux/toolkit, supabase)
+  (Next.js, jatai, supabase, stripe)
   </p>
   
   <span>
